@@ -381,6 +381,7 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     line-height: 1.4;
+    color: #ffffff;
 }
 
 .consent-checkbox {
@@ -392,7 +393,7 @@ body {
 }
 
 .consent-text {
-    color: #4a4a4a;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -477,11 +478,11 @@ body {
 }
 
 /* Footer */
-.footer {
-    padding: 3rem 2rem 2rem;
+footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem 0;
     text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    animation: fadeInUp 1s ease-out 1.5s both;
+    color: #ffffff;
 }
 
 .social-links {
@@ -499,7 +500,7 @@ body {
     height: 50px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    color: var(--text-secondary);
+    color: #ffffff;
     text-decoration: none;
     transition: var(--transition-bounce);
     backdrop-filter: blur(10px);
@@ -514,7 +515,7 @@ body {
 }
 
 .footer-text {
-    color: var(--text-secondary);
+    color: #ffffff;
     margin-bottom: 1rem;
     font-size: 0.9rem;
     font-weight: 300;
@@ -528,7 +529,7 @@ body {
 }
 
 .footer-link {
-    color: var(--text-secondary);
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.9rem;
     transition: var(--transition-smooth);
@@ -658,7 +659,7 @@ body {
     }
     
     .trovill-logo {
-        height: 80px;
+        display: none;
     }
     
     .brand-logo {
