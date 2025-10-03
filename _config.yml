@@ -1,0 +1,55 @@
+# GitHub Pages and Jekyll Configuration
+# This file tells GitHub Pages how to build and serve your site
+
+# Site settings
+title: "Trovill - Premium Fashion Coming Soon"
+description: "Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style."
+url: "https://yourusername.github.io"
+baseurl: "/trovillComingSoon"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .DS_Store
+
+# Include files
+include:
+  - assets
+
+# Plugin configuration
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+twitter:
+  username: trovill
+  card: summary_large_image
+
+facebook:
+  app_id: 
+  publisher: 
+
+logo: /assets/logo.png
+social:
+  name: Trovill Fashion
+  links:
+    - https://twitter.com/trovill
+    - https://facebook.com/trovill
+    - https://instagram.com/trovill
+    - https://pinterest.com/trovill
+
+# Serve settings for local development
+host: 0.0.0.0
+port: 4000
+livereload: true

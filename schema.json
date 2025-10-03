@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Trovill",
+  "description": "Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style.",
+  "url": "https://yourusername.github.io/trovillComingSoon/",
+  "logo": "https://yourusername.github.io/trovillComingSoon/assets/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "",
+    "contactType": "customer service",
+    "email": "hello@trovill.com"
+  },
+  "sameAs": [
+    "https://instagram.com/trovill",
+    "https://facebook.com/trovill",
+    "https://twitter.com/trovill",
+    "https://pinterest.com/trovill"
+  ],
+  "foundingDate": "2024",
+  "industry": "Fashion",
+  "keywords": "premium fashion, luxury clothing, designer wear, fashion brand, style, trovill"
+}

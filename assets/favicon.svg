@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4d03f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- White background -->
+  <rect width="32" height="32" rx="4" fill="#ffffff"/>
+  <!-- Gold border -->
+  <rect width="32" height="32" rx="4" fill="none" stroke="url(#goldGradient)" stroke-width="2"/>
+  <!-- Trovill text -->
+  <text x="16" y="12" font-family="serif" font-size="6" font-weight="bold" text-anchor="middle" fill="url(#goldGradient)">TROVILL</text>
+  <!-- Premium Fashion smaller text -->
+  <text x="16" y="20" font-family="serif" font-size="3" font-weight="normal" text-anchor="middle" fill="#666666">PREMIUM</text>
+  <text x="16" y="24" font-family="serif" font-size="3" font-weight="normal" text-anchor="middle" fill="#666666">FASHION</text>
+</svg>
