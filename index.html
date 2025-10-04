@@ -155,6 +155,13 @@
         </div>
     </div>
     
+    <!-- Hidden form for Netlify build-time detection -->
+    <form name="email-notifications" netlify netlify-honeypot="bot-field" hidden>
+        <input type="email" name="email" />
+        <input type="checkbox" name="consent" />
+        <input name="bot-field" />
+    </form>
+    
     <!-- Custom JavaScript -->
     <script src="script.js"></script>
 </body>
