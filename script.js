@@ -66,6 +66,7 @@ function initCountdown() {
     }
     
     function updateCountdownElement(element, value) {
+        if (!element) return; // Add null check
         const formattedValue = value.toString().padStart(2, '0');
         if (element.textContent !== formattedValue) {
             element.style.transform = 'scale(1.1)';
@@ -100,16 +101,17 @@ function initEmailSubscription() {
     const submitBtn = form.querySelector('.submit-btn');
     
     form.addEventListener('submit', function(e) {
+        // Always prevent default form submission
+        e.preventDefault();
+        
         const email = emailInput.value.trim();
         
         if (!email) {
-            e.preventDefault();
             showMessage('Please enter your email address.', 'error');
             return;
         }
         
         if (!isValidEmail(email)) {
-            e.preventDefault();
             showMessage('Please enter a valid email address.', 'error');
             return;
         }
@@ -117,24 +119,54 @@ function initEmailSubscription() {
         // Check if email is already subscribed (localStorage simulation)
         const subscribers = JSON.parse(localStorage.getItem('trovillSubscribers') || '[]');
         if (subscribers.includes(email)) {
-            e.preventDefault();
             showMessage('You\'re already subscribed! We\'ll notify you soon.', 'error');
             return;
         }
         
-        // Add to local storage before submitting to Netlify
+        // Add to local storage
         subscribers.push(email);
         localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
         
-        // Show loading state but allow form to submit
+        // Show loading state
         submitBtn.style.pointerEvents = 'none';
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        // Don't prevent default - let form submit to Netlify
-        // The form will redirect to /success.html automatically
+        // Check if running locally
+        const isLocalhost = window.location.hostname === 'localhost' || 
+                            window.location.hostname === '127.0.0.1' || 
+                            window.location.port === '8000';
+        
+        if (isLocalhost) {
+            // Local testing - just simulate success and redirect
+            setTimeout(() => {
+                window.location.href = '/success.html';
+            }, 1000);
+        } else {
+            // Production - submit form data to Netlify
+            const formData = new FormData(form);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Redirect to success page after successful submission
+                window.location.href = '/success.html';
+            })
+            .catch((error) => {
+                showMessage('Something went wrong. Please try again.', 'error');
+                // Reset button on error
+                submitBtn.innerHTML = `
+                    <span class="btn-text">Notify Me</span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                `;
+                submitBtn.style.pointerEvents = 'auto';
+            });
+        }
     });
     
     function showMessage(text, type) {
