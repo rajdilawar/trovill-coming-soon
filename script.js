@@ -100,16 +100,16 @@ function initEmailSubscription() {
     const submitBtn = form.querySelector('.submit-btn');
     
     form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
         const email = emailInput.value.trim();
         
         if (!email) {
+            e.preventDefault();
             showMessage('Please enter your email address.', 'error');
             return;
         }
         
         if (!isValidEmail(email)) {
+            e.preventDefault();
             showMessage('Please enter a valid email address.', 'error');
             return;
         }
@@ -117,44 +117,24 @@ function initEmailSubscription() {
         // Check if email is already subscribed (localStorage simulation)
         const subscribers = JSON.parse(localStorage.getItem('trovillSubscribers') || '[]');
         if (subscribers.includes(email)) {
+            e.preventDefault();
             showMessage('You\'re already subscribed! We\'ll notify you soon.', 'error');
             return;
         }
         
-        // Simulate subscription process
+        // Add to local storage before submitting to Netlify
+        subscribers.push(email);
+        localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
+        
+        // Show loading state but allow form to submit
         submitBtn.style.pointerEvents = 'none';
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        setTimeout(() => {
-            // Add to subscribers list
-            subscribers.push(email);
-            localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
-            
-            // Show success message
-            showMessage('🎉 Success! You\'ll be the first to know when we launch.', 'success');
-            
-            // Reset form
-            emailInput.value = '';
-            submitBtn.innerHTML = `
-                <span class="btn-text">Subscribed ✓</span>
-            `;
-            
-            // Reset button after delay
-            setTimeout(() => {
-                submitBtn.innerHTML = `
-                    <span class="btn-text">Notify Me</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                `;
-                submitBtn.style.pointerEvents = 'auto';
-            }, 3000);
-            
-            // Track subscription (you can integrate with analytics)
-            trackSubscription(email);
-            
-        }, 1500);
+        // Don't prevent default - let form submit to Netlify
+        // The form will redirect to /success.html automatically
     });
     
     function showMessage(text, type) {
