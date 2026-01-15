@@ -8,6 +8,14 @@
   # Optional: Set Node.js version if needed
   NODE_VERSION = "18"
 
+# Redirect after successful form submission
+[[redirects]]
+  from = "/*"
+  to = "/thank-you.html"
+  status = 200
+  force = false
+  conditions = {Role = ["form-submission"]}
+
 # Headers for security and performance
 [[headers]]
   for = "/*"
