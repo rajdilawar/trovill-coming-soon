@@ -1,12 +1,5 @@
 // Trovill Coming Soon - JavaScript functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if redirected after successful form submission
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true') {
-        window.location.href = '/success.html';
-        return;
-    }
-    
     // Initialize all functionality
     initLoader();
     initCountdown();
@@ -107,40 +100,25 @@ function initEmailSubscription() {
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
     
-    // Add visual feedback on submit
+    // Only add visual feedback, don't interfere with submission
     form.addEventListener('submit', function(e) {
-        const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
         
-        // Basic validation (HTML5 will handle required fields)
-        if (!email || !isValidEmail(email)) {
-            // Let HTML5 validation show the error
-            return;
-        }
-        
+        // Only validate consent - let HTML5 handle email validation
         if (!consentCheckbox.checked) {
             e.preventDefault();
             showMessage('Please agree to the privacy policy to continue.', 'error');
             return;
         }
         
-        // Show loading state (visual feedback only)
+        // Show loading state (visual feedback only, form will submit)
         submitBtn.disabled = true;
-        submitBtn.style.pointerEvents = 'none';
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        // Store in localStorage for future reference
-        const subscribers = JSON.parse(localStorage.getItem('trovillSubscribers') || '[]');
-        if (!subscribers.includes(email)) {
-            subscribers.push(email);
-            localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
-        }
-        
-        // Let form submit naturally to Netlify - DO NOT preventDefault()
-        // Netlify will handle the submission and redirect to /success.html
+        // Don't prevent default - let form submit naturally to Netlify
     });
     
     function showMessage(text, type) {

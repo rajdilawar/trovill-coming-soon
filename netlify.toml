@@ -8,10 +8,6 @@
   # Optional: Set Node.js version if needed
   NODE_VERSION = "18"
 
-# Form handling settings
-[[forms]]
-  # Enable form detection
-  
 # Headers for security and performance
 [[headers]]
   for = "/*"
