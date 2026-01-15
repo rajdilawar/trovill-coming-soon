@@ -67,8 +67,13 @@
                 <div class="subscription-container">
                     <h3 class="subscription-title">Join the Waiting List</h3>
                     <p class="subscription-subtitle">No spam promised. Get early access to our first drop, private pre-launch pricing, and Berlin launch updates.</p>
-                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true">
+                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true" action="/thank-you.html" netlify-honeypot="bot-field">
                         <input type="hidden" name="form-name" value="email-notifications">
+                        
+                        <!-- Honeypot for spam protection -->
+                        <p style="display:none;">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
                         
                         <div class="input-group">
                             <input 
@@ -150,8 +155,9 @@
     </div>
     
     <!-- Hidden form for Netlify build-time detection -->
-    <form name="email-notifications" data-netlify="true" hidden>
+    <form name="email-notifications" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="hidden" name="form-name" value="email-notifications" />
+        <input name="bot-field" />
         <input type="email" name="email" />
         <input type="checkbox" name="consent" />
     </form>
