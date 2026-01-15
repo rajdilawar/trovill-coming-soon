@@ -1,5 +1,12 @@
 // Trovill Coming Soon - JavaScript functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if redirected after successful form submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+        window.location.href = '/success.html';
+        return;
+    }
+    
     // Initialize all functionality
     initLoader();
     initCountdown();
