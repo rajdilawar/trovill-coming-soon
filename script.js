@@ -124,7 +124,31 @@ function initEmailSubscription() {
             <div class="btn-spinner"></div>
         `;
         
-        // Submit form data
+        // Check if running locally
+        const isLocal = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname === '';
+        
+        if (isLocal) {
+            // Local testing - just simulate success
+            setTimeout(() => {
+                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span class="btn-text">Notify Me</span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                `;
+                
+                // Redirect after showing message
+                setTimeout(() => {
+                    window.location.href = '/thank-you.html';
+                }, 2000);
+            }, 1000);
+            return;
+        }
+        
+        // Production - Submit form data to Netlify
         const formData = new FormData(form);
         
         fetch('/', {
@@ -338,13 +362,18 @@ document.addEventListener('keydown', function(e) {
 function initPerformanceMonitoring() {
     // Monitor page load performance
     window.addEventListener('load', function() {
-        const perfData = performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        
-        console.log('Page load time:', pageLoadTime + 'ms');
-        
-        // You can send this data to your analytics service
-        // analytics.track('page_load_time', { duration: pageLoadTime });
+        if (performance && performance.timing) {
+            const perfData = performance.timing;
+            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+            
+            // Only log if we have valid timing data
+            if (pageLoadTime > 0 && pageLoadTime < 60000) { // Less than 60 seconds is reasonable
+                console.log('Page load time:', pageLoadTime + 'ms');
+                
+                // You can send this data to your analytics service
+                // analytics.track('page_load_time', { duration: pageLoadTime });
+            }
+        }
     });
 }
 
