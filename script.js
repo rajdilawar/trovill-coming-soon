@@ -100,73 +100,40 @@ function initEmailSubscription() {
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
     
+    // Add visual feedback on submit
     form.addEventListener('submit', function(e) {
-        // Always prevent default form submission
-        e.preventDefault();
-        
         const email = emailInput.value.trim();
+        const consentCheckbox = form.querySelector('input[name="consent"]');
         
-        if (!email) {
-            showMessage('Please enter your email address.', 'error');
+        // Basic validation (HTML5 will handle required fields)
+        if (!email || !isValidEmail(email)) {
+            // Let HTML5 validation show the error
             return;
         }
         
-        if (!isValidEmail(email)) {
-            showMessage('Please enter a valid email address.', 'error');
+        if (!consentCheckbox.checked) {
+            e.preventDefault();
+            showMessage('Please agree to the privacy policy to continue.', 'error');
             return;
         }
         
-        // Check if email is already subscribed (localStorage simulation)
-        const subscribers = JSON.parse(localStorage.getItem('trovillSubscribers') || '[]');
-        if (subscribers.includes(email)) {
-            showMessage('You\'re already subscribed! We\'ll notify you soon.', 'error');
-            return;
-        }
-        
-        // Add to local storage
-        subscribers.push(email);
-        localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
-        
-        // Show loading state
+        // Show loading state (visual feedback only)
+        submitBtn.disabled = true;
         submitBtn.style.pointerEvents = 'none';
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        // Check if running locally
-        const isLocalhost = window.location.hostname === 'localhost' || 
-                            window.location.hostname === '127.0.0.1' || 
-                            window.location.port === '8000';
-        
-        if (isLocalhost) {
-            // Local testing - just simulate success and redirect
-            setTimeout(() => {
-                window.location.href = '/success.html';
-            }, 1000);
-        } else {
-            // Production - submit form data to Netlify
-            const formData = new FormData(form);
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // Redirect to success page after successful submission
-                window.location.href = '/success.html';
-            })
-            .catch((error) => {
-                showMessage('Something went wrong. Please try again.', 'error');
-                // Reset button on error
-                submitBtn.innerHTML = `
-                    <span class="btn-text">Notify Me</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                `;
-                submitBtn.style.pointerEvents = 'auto';
-            });
+        // Store in localStorage for future reference
+        const subscribers = JSON.parse(localStorage.getItem('trovillSubscribers') || '[]');
+        if (!subscribers.includes(email)) {
+            subscribers.push(email);
+            localStorage.setItem('trovillSubscribers', JSON.stringify(subscribers));
         }
+        
+        // Let form submit naturally to Netlify - DO NOT preventDefault()
+        // Netlify will handle the submission and redirect to /success.html
     });
     
     function showMessage(text, type) {

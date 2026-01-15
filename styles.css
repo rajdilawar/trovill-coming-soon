@@ -175,21 +175,38 @@ body {
     animation: fadeInUp 1s ease-out 0.3s both;
 }
 
+.hero-text-box {
+    background: linear-gradient(135deg, rgba(206, 200, 182, 0.2) 0%, rgba(212, 175, 55, 0.3) 100%);
+    backdrop-filter: blur(15px);
+    padding: 2rem 2.5rem;
+    border-radius: 15px;
+    border: 3px solid rgba(212, 175, 55, 0.8);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    display: block !important;
+    margin: 0 auto 2rem auto;
+    max-width: 90%;
+    text-align: center;
+}
+
 .hero-title {
     font-family: var(--font-heading);
     font-size: 3.5rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
     color: #ffffff;
     line-height: 1.2;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.2) 100%);
-    backdrop-filter: blur(15px);
-    padding: 1rem 2rem;
-    border-radius: 15px;
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    display: inline-block;
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 2px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 0 20px rgba(216, 205, 170, 0.8), 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-subheading {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+    color: #ffffff;
+    line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    opacity: 0.95;
 }
 
 .hero-subtitle {

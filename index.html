@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trovill - Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style.">
+    <meta name="description" content="Discover conscious craftsmanship and honest materials in Trovill's timeless wardrobe essentials. Designed in Berlin for modern elegance. Join the waitlist.">
     <meta name="keywords" content="fashion, luxury, clothing, style, brand, trovill, coming soon">
     <meta name="author" content="Trovill Fashion">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Trovill - Coming Soon">
-    <meta property="og:description" content="Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style.">
+    <meta property="og:title" content="Trovill – Sustainable European Clothing Coming Soon | Timeless Pieces from Berlin">
+    <meta property="og:description" content="Discover conscious craftsmanship and honest materials in Trovill's timeless wardrobe essentials. Designed in Berlin for modern elegance. Join the waitlist.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourusername.github.io/trovillComingSoon">
     <meta property="og:image" content="https://yourusername.github.io/trovillComingSoon/assets/og-image.jpg">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Trovill - Coming Soon">
-    <meta name="twitter:description" content="Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style.">
+    <meta name="twitter:title" content="Trovill – Sustainable European Clothing Coming Soon | Timeless Pieces from Berlin">
+    <meta name="twitter:description" content="Discover conscious craftsmanship and honest materials in Trovill's timeless wardrobe essentials. Designed in Berlin for modern elegance. Join the waitlist.">
     <meta name="twitter:image" content="https://yourusername.github.io/trovillComingSoon/assets/og-image.jpg">
     
-    <title>Trovill - Premium Fashion Coming Soon</title>
+    <title>Trovill – Sustainable European Clothing Coming Soon | Timeless Pieces from Berlin</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/trovillBrand.png">
@@ -60,18 +60,17 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h2 class="hero-title">Something Beautiful is Coming</h2>
+                <div class="hero-text-box">
+                    <h2 class="hero-title">Timeless Pieces, Crafted with Soul</h2>
+                    <h3 class="hero-subheading">Every outfit is special and each design has a story—handcrafted sustainable clothing for quiet luxury, launching Spring 2026 from Berlin.</h3>
+                </div>
                 
                 <!-- Email Subscription -->
                 <div class="subscription-container">
-                    <h3 class="subscription-title">Be the First to Know</h3>
-                    <p class="subscription-subtitle">Join our exclusive list for early access and special offers</p>
-                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
-                        <!-- Hidden bot field for spam protection -->
+                    <h3 class="subscription-title">Join the Waiting List</h3>
+                    <p class="subscription-subtitle">No spam promised. Get early access to our first drop, private pre-launch pricing, and Berlin launch updates.</p>
+                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true" action="/success.html">
                         <input type="hidden" name="form-name" value="email-notifications">
-                        <div style="display: none;">
-                            <input name="bot-field">
-                        </div>
                         
                         <div class="input-group">
                             <input 
@@ -134,7 +133,7 @@
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </div>
-            <p class="footer-text">© 2025 Trovill. All rights reserved.</p>
+            <p class="footer-text">© 2026 Trovill. All rights reserved.</p>
             <div class="footer-links">
                 <a href="mailto:info@trovill.com" class="footer-link" title="I consent to receive marketing emails from Trovill and agree to the Privacy Policy. All data will be deleted within 6 months.">Contact Us</a>
                 <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
@@ -153,10 +152,10 @@
     </div>
     
     <!-- Hidden form for Netlify build-time detection -->
-    <form name="email-notifications" netlify netlify-honeypot="bot-field" hidden>
+    <form name="email-notifications" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="email-notifications" />
         <input type="email" name="email" />
         <input type="checkbox" name="consent" />
-        <input name="bot-field" />
     </form>
     
     <!-- Custom JavaScript -->
