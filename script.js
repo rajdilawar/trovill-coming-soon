@@ -100,25 +100,60 @@ function initEmailSubscription() {
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
     
-    // Only add visual feedback, don't interfere with submission
     form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Always prevent default to handle with Ajax
+        
+        const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
         
-        // Only validate consent - let HTML5 handle email validation
+        // Validate
+        if (!email || !isValidEmail(email)) {
+            showMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+        
         if (!consentCheckbox.checked) {
-            e.preventDefault();
             showMessage('Please agree to the privacy policy to continue.', 'error');
             return;
         }
         
-        // Show loading state (visual feedback only, form will submit)
+        // Show loading state
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        // Don't prevent default - let form submit naturally to Netlify
+        // Submit form data
+        const formData = new FormData(form);
+        
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+        })
+        .then(response => {
+            if (response.ok) {
+                // Success! Show success message and redirect
+                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
+                form.reset();
+                
+                // Redirect to thank you page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/thank-you.html';
+                }, 2000);
+            } else {
+                throw new Error('Submission failed');
+            }
+        })
+        .catch(error => {
+            showMessage('Something went wrong. Please try again.', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+                <span class="btn-text">Notify Me</span>
+                <i class="fas fa-arrow-right btn-icon"></i>
+            `;
+        });
     });
     
     function showMessage(text, type) {
