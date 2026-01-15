@@ -67,7 +67,7 @@
                 <div class="subscription-container">
                     <h3 class="subscription-title">Join the Waiting List</h3>
                     <p class="subscription-subtitle">No spam promised. Get early access to our first drop, private pre-launch pricing, and Berlin launch updates.</p>
-                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true" action="/thank-you.html" netlify-honeypot="bot-field">
+                    <form class="subscription-form" id="subscriptionForm" name="email-notifications" method="POST" data-netlify="true" action="thank-you.html" netlify-honeypot="bot-field">
                         <input type="hidden" name="form-name" value="email-notifications">
                         
                         <!-- Honeypot for spam protection -->
@@ -93,7 +93,7 @@
                         <!-- GDPR Consent -->
                         <div class="consent-container">
                             <label class="consent-label">
-                                <input type="checkbox" name="consent" required class="consent-checkbox">
+                                <input type="checkbox" name="consent" value="yes" required class="consent-checkbox">
                                 <span class="consent-text">I consent to receive marketing emails from Trovill and agree to the <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>. All data will be deleted within 6 months.</span>
                             </label>
                         </div>
@@ -159,7 +159,7 @@
         <input type="hidden" name="form-name" value="email-notifications" />
         <input name="bot-field" />
         <input type="email" name="email" />
-        <input type="checkbox" name="consent" />
+        <input type="checkbox" name="consent" value="yes" />
     </form>
     
     <!-- Custom JavaScript -->

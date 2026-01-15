@@ -334,7 +334,7 @@ function initSocialIntegration() {
 // Keyboard Navigation
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && e.target === document.getElementById('email')) {
-        document.getElementById('subscriptionForm').dispatchEvent(new Event('submit'));
+        document.getElementById('subscriptionForm').requestSubmit();
     }
 });
 
