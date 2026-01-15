@@ -99,39 +99,37 @@ function initEmailSubscription() {
     const emailInput = document.getElementById('email');
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
-    
-    form.addEventListener('submit', function(e) {
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault(); // we now ALWAYS handle submission ourselves
+
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
-        
-        // Validate
+
+        // Basic validation
         if (!email || !isValidEmail(email)) {
-            e.preventDefault();
             showMessage('Please enter a valid email address.', 'error');
             return;
         }
-        
+
         if (!consentCheckbox.checked) {
-            e.preventDefault();
             showMessage('Please agree to the privacy policy to continue.', 'error');
             return;
         }
-        
-        // Check if running locally
-        const isLocal = window.location.hostname === 'localhost' || 
-                       window.location.hostname === '127.0.0.1' ||
-                       window.location.hostname === '';
-        
+
+        const isLocal =
+            window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1' ||
+            window.location.hostname === '';
+
         if (isLocal) {
-            // Local testing - prevent submission and simulate
-            e.preventDefault();
-            
+            // Local testing – simulate success
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
                 <span class="btn-text">Subscribing...</span>
                 <div class="btn-spinner"></div>
             `;
-            
+
             setTimeout(() => {
                 showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
                 form.reset();
@@ -140,52 +138,77 @@ function initEmailSubscription() {
                     <span class="btn-text">Notify Me</span>
                     <i class="fas fa-arrow-right btn-icon"></i>
                 `;
-                
-                // Redirect after showing message
+
+                // Local: redirect after short delay
                 setTimeout(() => {
                     window.location.href = '/thank-you.html';
                 }, 2000);
             }, 1000);
+
             return;
         }
-        
-        // Production - Show loading state and let form submit naturally to Netlify
-        // DO NOT prevent default - Netlify needs the native form submission
+
+        // Production – send a proper Netlify form submission via fetch
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
-        
-        // Form will submit naturally to the action URL
+
+        // Build URL-encoded body Netlify expects
+        const formName = form.getAttribute('name'); // "email-notifications"
+        const botFieldInput = form.querySelector('input[name="bot-field"]');
+        const botField = botFieldInput ? botFieldInput.value : '';
+
+        const payload = new URLSearchParams({
+            'form-name': formName,
+            email,
+            consent: 'yes',
+            'bot-field': botField
+        }).toString();
+
+        try {
+            const res = await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: payload
+            });
+
+            if (!res.ok) {
+                throw new Error('Form submit failed with status ' + res.status);
+            }
+
+            // On success, go to the thank-you page (GET)
+            window.location.href = '/thank-you.html';
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showMessage('Something went wrong. Please try again in a moment.', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+                <span class="btn-text">Notify Me</span>
+                <i class="fas fa-arrow-right btn-icon"></i>
+            `;
+        }
     });
-    
+
     function showMessage(text, type) {
         messageDiv.textContent = text;
         messageDiv.className = `form-message ${type}`;
-        
-        // Clear message after delay
+
         setTimeout(() => {
             messageDiv.textContent = '';
             messageDiv.className = 'form-message';
         }, 5000);
     }
-    
+
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-    
+
     function trackSubscription(email) {
-        // You can integrate with Google Analytics, Mixpanel, etc.
         console.log('New subscription:', email);
-        
-        // Example: Send to your backend
-        // fetch('/api/subscribe', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ email: email })
-        // });
+        // place for analytics if you want later
     }
 }
 
