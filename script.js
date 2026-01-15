@@ -101,28 +101,21 @@ function initEmailSubscription() {
     const submitBtn = form.querySelector('.submit-btn');
     
     form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Always prevent default to handle with Ajax
-        
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
         
         // Validate
         if (!email || !isValidEmail(email)) {
+            e.preventDefault();
             showMessage('Please enter a valid email address.', 'error');
             return;
         }
         
         if (!consentCheckbox.checked) {
+            e.preventDefault();
             showMessage('Please agree to the privacy policy to continue.', 'error');
             return;
         }
-        
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <span class="btn-text">Subscribing...</span>
-            <div class="btn-spinner"></div>
-        `;
         
         // Check if running locally
         const isLocal = window.location.hostname === 'localhost' || 
@@ -130,7 +123,15 @@ function initEmailSubscription() {
                        window.location.hostname === '';
         
         if (isLocal) {
-            // Local testing - just simulate success
+            // Local testing - prevent submission and simulate
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <span class="btn-text">Subscribing...</span>
+                <div class="btn-spinner"></div>
+            `;
+            
             setTimeout(() => {
                 showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
                 form.reset();
@@ -148,36 +149,15 @@ function initEmailSubscription() {
             return;
         }
         
-        // Production - Submit form data to Netlify
-        const formData = new FormData(form);
+        // Production - Show loading state and let form submit naturally to Netlify
+        // DO NOT prevent default - Netlify needs the native form submission
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <span class="btn-text">Subscribing...</span>
+            <div class="btn-spinner"></div>
+        `;
         
-        fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString()
-        })
-        .then(response => {
-            if (response.ok) {
-                // Success! Show success message and redirect
-                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
-                form.reset();
-                
-                // Redirect to thank you page after 2 seconds
-                setTimeout(() => {
-                    window.location.href = '/thank-you.html';
-                }, 2000);
-            } else {
-                throw new Error('Submission failed');
-            }
-        })
-        .catch(error => {
-            showMessage('Something went wrong. Please try again.', 'error');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `
-                <span class="btn-text">Notify Me</span>
-                <i class="fas fa-arrow-right btn-icon"></i>
-            `;
-        });
+        // Form will submit naturally to the action URL
     });
     
     function showMessage(text, type) {
