@@ -1,8 +1,13 @@
 // Trovill Coming Soon - JavaScript functionality
-console.log('🎬 [DEBUG] Script loaded, waiting for DOMContentLoaded...');
+const BUILD_VERSION = 'v2.5.0';
+const BUILD_TIMESTAMP = '2026-01-17T00:30:00Z';
+
+console.log(`🎬 [DEBUG][${new Date().toISOString()}] Script loaded - BUILD: ${BUILD_VERSION} (${BUILD_TIMESTAMP})`);
+console.log('⏰ [DEBUG] Current browser time:', new Date().toString());
+console.log('🔄 [DEBUG] If you see an old build version, hard refresh (Ctrl+Shift+R or Cmd+Shift+R)');
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ [DEBUG] DOM Content Loaded, initializing...');
+    console.log(`✅ [DEBUG][${new Date().toISOString()}] DOM Content Loaded, initializing...`);
     
     // Initialize all functionality
     initLoader();
@@ -11,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initParallaxEffect();
     
-    console.log('🎉 [DEBUG] All initializations complete');
+    console.log(`🎉 [DEBUG][${new Date().toISOString()}] All initializations complete - BUILD ${BUILD_VERSION}`);
 });
 
 // Loading Screen
@@ -102,13 +107,14 @@ function initCountdown() {
 // Email Subscription
 function initEmailSubscription() {
     const form = document.getElementById('subscriptionForm');
-    if (!form) {
-        console.error('❌ [DEBUG] Form not found with id="subscriptionForm"');
-        return;
-    }
-
-    console.log('✅ [DEBUG] Form initialized:', {
+    if (!form) {`✅ [DEBUG][${new Date().toISOString()}] Form initialized - BUILD ${BUILD_VERSION}:`, {
         formId: form.id,
+        formName: form.name,
+        formAction: form.action,
+        formMethod: form.method,
+        hasNetlifyAttr: form.hasAttribute('data-netlify'),
+        hasNetlifyPlainAttr: form.hasAttribute('netlify'),
+        allFormInputs: Array.from(form.elements).map(el => ({name: el.name, type: el.type})
         formName: form.name,
         formAction: form.action,
         formMethod: form.method,
@@ -123,15 +129,17 @@ function initEmailSubscription() {
     form.addEventListener('submit', function (e) {
         // ALWAYS prevent default first to ensure our code runs
         e.preventDefault();
-        
-        console.log('📋 [DEBUG] Form submit event triggered (prevented default)');
+        t timestamp = new Date().toISOString();
+        console.log(`📋 [DEBUG][${timestamp}] Form submit event triggered (prevented default) - BUILD ${BUILD_VERSION}`);
         
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
 
-        console.log('📊 [DEBUG] Form data:', {
+        console.log(`📊 [DEBUG][${timestamp}] Form data:`, {
             email: email,
             consentChecked: consentCheckbox?.checked,
+            buildVersion: BUILD_VERSION,
+            timestamp: timestampbox?.checked,
             formData: new FormData(form)
         });
 
@@ -150,10 +158,12 @@ function initEmailSubscription() {
 
         const isLocal =
             window.location.hostname === 'localhost' ||
-            window.location.hostname === '127.0.0.1' ||
-            window.location.hostname === '';
-
-        console.log('🌍 [DEBUG] Environment:', {
+            window.l`🌍 [DEBUG][${timestamp}] Environment:`, {
+            hostname: window.location.hostname,
+            isLocal: isLocal,
+            fullUrl: window.location.href,
+            protocol: window.location.protocol,
+            buildVersion: BUILD_VERSIONnt:', {
             hostname: window.location.hostname,
             isLocal: isLocal,
             fullUrl: window.location.href
@@ -184,13 +194,8 @@ function initEmailSubscription() {
                     window.location.href = '/thank-you.html';
                 }, 2000);
             }, 1000);
-
-            return;
-        }
-
-        // Production – Submit form using fetch API for Netlify Forms
-        console.log('🚀 [DEBUG] PRODUCTION MODE: Using fetch to submit');
-        console.log('📤 [DEBUG] Form will POST to:', form.action);
+`🚀 [DEBUG][${timestamp}] PRODUCTION MODE: Using fetch to submit - BUILD ${BUILD_VERSION}`);
+        console.log(`📤 [DEBUG][${timestamp}] Target URL:`, window.location.origin + '/');
         
         // Build form data
         const formData = new FormData(form);
@@ -199,7 +204,14 @@ function initEmailSubscription() {
             formObject[key] = value;
         });
         
-        console.log('📋 [DEBUG] Form data being submitted:', formObject);
+        console.log(`📋 [DEBUG][${timestamp}] Form data being submitted:`, formObject);
+        console.log(`🔍 [DEBUG][${timestamp}] Checking hidden form existence...`);
+        const hiddenForm = document.querySelector('form[name="email-notifications"][hidden]');
+        console.log(`👻 [DEBUG][${timestamp}] Hidden form found:`, !!hiddenForm, hiddenForm ? {
+            method: hiddenForm.method,
+            action: hiddenForm.action,
+            hasDataNetlify: hiddenForm.hasAttribute('data-netlify')
+        } : 'NOT FOUND');
         
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -207,33 +219,52 @@ function initEmailSubscription() {
             <div class="btn-spinner"></div>
         `;
         
-        console.log('⏳ [DEBUG] Sending fetch request to Netlify Forms...');
+        console.log(`⏳ [DEBUG][${timestamp}] Sending fetch request to Netlify Forms...`);
         
         // Encode form data for Netlify
         const formBody = Object.keys(formObject)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(formObject[key]))
             .join('&');
         
-        console.log('📦 [DEBUG] Encoded form body:', formBody);
-        
-        fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formBody
-        })
-        .then(response => {
-            console.log('✅ [DEBUG] Fetch response received:', {
+        console.log(`📦 [DEBUG][${timestamp}] Encoded form body:`, formBody);
+        console.t responseTime = new Date().toISOString();
+            console.log(`✅ [DEBUG][${responseTime}] Fetch response received - BUILD ${BUILD_VERSION}:`, {
                 status: response.status,
                 statusText: response.statusText,
                 ok: response.ok,
-                url: response.url
+                url: response.url,
+                type: response.type,
+                redirected: response.redirected,
+                headers: {
+                    contentType: response.headers.get('content-type'),
+                    server: response.headers.get('server')
+                }
             });
             
             if (response.ok) {
-                console.log('🎉 [DEBUG] Form submitted successfully!');
+                console.log(`🎉 [DEBUG][${responseTime}] Form submitted successfully! - BUILD ${BUILD_VERSION}`);
                 showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
                 
                 // Wait 2 seconds before redirecting
+                setTimeout(() => {
+                    console.log(`🔄 [DEBUG][${new Date().toISOString()}] Redirecting to thank-you page...`);
+                    window.location.href = '/thank-you.html';
+                }, 2000);
+            } else {
+                console.error(`❌ [DEBUG][${responseTime}] Server returned error status:`, response.status);
+                console.error(`🔍 [DEBUG][${responseTime}] This likely means Netlify Forms endpoint not created properly`);
+                console.error(`💡 [DEBUG][${responseTime}] Check: 1) Hidden form exists, 2) Deploy completed, 3) Form detected in build log`);
+                showMessage('Something went wrong. Please try again.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span class="btn-text">Notify Me</span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                `;
+            }
+        })
+        .catch(error => {
+            const errorTime = new Date().toISOString();
+            console.error(`❌ [DEBUG][${errorTime}] Fetch error:`ng
                 setTimeout(() => {
                     console.log('🔄 [DEBUG] Redirecting to thank-you page...');
                     window.location.href = '/thank-you.html';
