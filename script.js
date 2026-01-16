@@ -96,6 +96,8 @@ function initCountdown() {
 // Email Subscription
 function initEmailSubscription() {
     const form = document.getElementById('subscriptionForm');
+    if (!form) return;
+
     const emailInput = document.getElementById('email');
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
@@ -148,14 +150,14 @@ function initEmailSubscription() {
             return;
         }
 
-        // Production – send a proper Netlify form submission via fetch
+        // Production – send a proper Netlify form submission to "/"
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
 
-        // Build URL-encoded body Netlify expects
+        // Build URL-encoded body exactly how Netlify expects it
         const formName = form.getAttribute('name'); // "email-notifications"
         const botFieldInput = form.querySelector('input[name="bot-field"]');
         const botField = botFieldInput ? botFieldInput.value : '';
@@ -168,7 +170,7 @@ function initEmailSubscription() {
         }).toString();
 
         try {
-            const res = await fetch(form.getAttribute('action'), {
+            const res = await fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: payload
@@ -192,6 +194,7 @@ function initEmailSubscription() {
     });
 
     function showMessage(text, type) {
+        if (!messageDiv) return;
         messageDiv.textContent = text;
         messageDiv.className = `form-message ${type}`;
 
@@ -208,7 +211,7 @@ function initEmailSubscription() {
 
     function trackSubscription(email) {
         console.log('New subscription:', email);
-        // place for analytics if you want later
+        // Hook for future analytics
     }
 }
 
