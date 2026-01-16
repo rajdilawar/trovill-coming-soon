@@ -159,15 +159,15 @@ function initEmailSubscription() {
 
         const isLocal =
             window.location.hostname === 'localhost' ||
-            window.l`🌍 [DEBUG][${timestamp}] Environment:`, {
+            window.location.hostname === '127.0.0.1' ||
+            window.location.hostname.startsWith('192.168.');
+
+        console.log(`🌍 [DEBUG][${timestamp}] Environment:`, {
             hostname: window.location.hostname,
             isLocal: isLocal,
             fullUrl: window.location.href,
             protocol: window.location.protocol,
-            buildVersion: BUILD_VERSIONnt:', {
-            hostname: window.location.hostname,
-            isLocal: isLocal,
-            fullUrl: window.location.href
+            buildVersion: BUILD_VERSION
         });
 
         if (isLocal) {
@@ -195,10 +195,12 @@ function initEmailSubscription() {
                     window.location.href = '/thank-you.html';
                 }, 2000);
             }, 1000);
-`🚀 [DEBUG][${timestamp}] PRODUCTION MODE: Using fetch to submit - BUILD ${BUILD_VERSION}`);
-        console.log(`📤 [DEBUG][${timestamp}] Target URL:`, window.location.origin + '/');
-        
-        // Build form data
+        } else {
+            // Production mode - submit to Netlify Forms
+            console.log(`🚀 [DEBUG][${timestamp}] PRODUCTION MODE: Using fetch to submit - BUILD ${BUILD_VERSION}`);
+            console.log(`📤 [DEBUG][${timestamp}] Target URL:`, window.location.origin + '/');
+            
+            // Build form data
         const formData = new FormData(form);
         const formObject = {};
         formData.forEach((value, key) => {
@@ -228,7 +230,14 @@ function initEmailSubscription() {
             .join('&');
         
         console.log(`📦 [DEBUG][${timestamp}] Encoded form body:`, formBody);
-        console.t responseTime = new Date().toISOString();
+        
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formBody
+        })
+        .then(response => {
+            const responseTime = new Date().toISOString();
             console.log(`✅ [DEBUG][${responseTime}] Fetch response received - BUILD ${BUILD_VERSION}:`, {
                 status: response.status,
                 statusText: response.statusText,
@@ -265,23 +274,8 @@ function initEmailSubscription() {
         })
         .catch(error => {
             const errorTime = new Date().toISOString();
-            console.error(`❌ [DEBUG][${errorTime}] Fetch error:`ng
-                setTimeout(() => {
-                    console.log('🔄 [DEBUG] Redirecting to thank-you page...');
-                    window.location.href = '/thank-you.html';
-                }, 2000);
-            } else {
-                console.error('❌ [DEBUG] Server returned error status:', response.status);
-                showMessage('Something went wrong. Please try again.', 'error');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `
-                    <span class="btn-text">Notify Me</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                `;
-            }
-        })
-        .catch(error => {
-            console.error('❌ [DEBUG] Fetch error:', error);
+            console.error(`❌ [DEBUG][${errorTime}] Fetch error:`, error);
+            console.error(`🔍 [DEBUG][${errorTime}] This may be a network error or CORS issue`);
             showMessage('Network error. Please check your connection.', 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = `
@@ -289,6 +283,7 @@ function initEmailSubscription() {
                 <i class="fas fa-arrow-right btn-icon"></i>
             `;
         });
+        }
     });
 
     function showMessage(text, type) {
