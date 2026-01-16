@@ -1,11 +1,17 @@
 // Trovill Coming Soon - JavaScript functionality
+console.log('🎬 [DEBUG] Script loaded, waiting for DOMContentLoaded...');
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ [DEBUG] DOM Content Loaded, initializing...');
+    
     // Initialize all functionality
     initLoader();
     initCountdown();
     initEmailSubscription();
     initAnimations();
     initParallaxEffect();
+    
+    console.log('🎉 [DEBUG] All initializations complete');
 });
 
 // Loading Screen
@@ -96,24 +102,48 @@ function initCountdown() {
 // Email Subscription
 function initEmailSubscription() {
     const form = document.getElementById('subscriptionForm');
-    if (!form) return;
+    if (!form) {
+        console.error('❌ [DEBUG] Form not found with id="subscriptionForm"');
+        return;
+    }
+
+    console.log('✅ [DEBUG] Form initialized:', {
+        formId: form.id,
+        formName: form.name,
+        formAction: form.action,
+        formMethod: form.method,
+        hasNetlifyAttr: form.hasAttribute('data-netlify'),
+        hasNetlifyPlainAttr: form.hasAttribute('netlify')
+    });
 
     const emailInput = document.getElementById('email');
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
 
     form.addEventListener('submit', function (e) {
+        console.log('📋 [DEBUG] Form submit event triggered');
+        
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
 
+        console.log('📊 [DEBUG] Form data:', {
+            email: email,
+            consentChecked: consentCheckbox?.checked,
+            formData: new FormData(form)
+        });
+
         // Basic validation
         if (!email || !isValidEmail(email)) {
+            console.warn('⚠️ [DEBUG] Invalid email:', email);
             showMessage('Please enter a valid email address.', 'error');
+            e.preventDefault();
             return;
         }
 
-        if (!consentCheckbox.checked) {
+        if (!consentCheckbox || !consentCheckbox.checked) {
+            console.warn('⚠️ [DEBUG] Consent checkbox not checked');
             showMessage('Please agree to the privacy policy to continue.', 'error');
+            e.preventDefault();
             return;
         }
 
@@ -122,8 +152,17 @@ function initEmailSubscription() {
             window.location.hostname === '127.0.0.1' ||
             window.location.hostname === '';
 
+        console.log('🌍 [DEBUG] Environment:', {
+            hostname: window.location.hostname,
+            isLocal: isLocal,
+            fullUrl: window.location.href
+        });
+
         if (isLocal) {
             // Local testing – simulate success
+            console.log('🏠 [DEBUG] LOCAL MODE: Preventing default and simulating submission');
+            e.preventDefault();
+            
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
                 <span class="btn-text">Subscribing...</span>
@@ -131,6 +170,7 @@ function initEmailSubscription() {
             `;
 
             setTimeout(() => {
+                console.log('✨ [DEBUG] LOCAL MODE: Showing success message');
                 showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
                 form.reset();
                 submitBtn.disabled = false;
@@ -141,6 +181,7 @@ function initEmailSubscription() {
 
                 // Local: redirect after short delay
                 setTimeout(() => {
+                    console.log('🔄 [DEBUG] LOCAL MODE: Redirecting to thank-you.html');
                     window.location.href = '/thank-you.html';
                 }, 2000);
             }, 1000);
@@ -149,13 +190,24 @@ function initEmailSubscription() {
         }
 
         // Production – Let browser submit form NATIVELY
+        console.log('🚀 [DEBUG] PRODUCTION MODE: Allowing native form submission');
+        console.log('📤 [DEBUG] Form will POST to:', form.action);
+        console.log('📋 [DEBUG] Form data being submitted:', {
+            'form-name': form.name,
+            'email': email,
+            'consent': consentCheckbox.value,
+            'bot-field': form.querySelector('[name="bot-field"]')?.value || ''
+        });
+        
         // Don't preventDefault - let Netlify handle it
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
-        // Form submits naturally to action="/thank-you.html"
+        
+        console.log('⏳ [DEBUG] Native form submission starting...');
+        // Form submits naturally to action="/"
     });
 
     function showMessage(text, type) {
