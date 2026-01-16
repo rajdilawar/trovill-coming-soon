@@ -102,9 +102,7 @@ function initEmailSubscription() {
     const messageDiv = document.getElementById('formMessage');
     const submitBtn = form.querySelector('.submit-btn');
 
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault(); // we now ALWAYS handle submission ourselves
-
+    form.addEventListener('submit', function (e) {
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
 
@@ -150,47 +148,14 @@ function initEmailSubscription() {
             return;
         }
 
-        // Production – send a proper Netlify form submission to "/"
+        // Production – Let browser submit form NATIVELY
+        // Don't preventDefault - let Netlify handle it
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
-
-        // Build URL-encoded body exactly how Netlify expects it
-        const formName = form.getAttribute('name'); // "email-notifications"
-        const botFieldInput = form.querySelector('input[name="bot-field"]');
-        const botField = botFieldInput ? botFieldInput.value : '';
-
-        const payload = new URLSearchParams({
-            'form-name': formName,
-            email,
-            consent: 'yes',
-            'bot-field': botField
-        }).toString();
-
-        try {
-            const res = await fetch('/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: payload
-            });
-
-            if (!res.ok) {
-                throw new Error('Form submit failed with status ' + res.status);
-            }
-
-            // On success, go to the thank-you page (GET)
-            window.location.href = '/thank-you.html';
-        } catch (error) {
-            console.error('Form submission error:', error);
-            showMessage('Something went wrong. Please try again in a moment.', 'error');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `
-                <span class="btn-text">Notify Me</span>
-                <i class="fas fa-arrow-right btn-icon"></i>
-            `;
-        }
+        // Form submits naturally to action="/thank-you.html"
     });
 
     function showMessage(text, type) {
