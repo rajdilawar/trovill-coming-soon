@@ -1,2 +1,2 @@
-# Netlify Forms redirect after successful submission
-/  /thank-you.html  200!  Form=email-notifications
+# Netlify Forms redirect - post-submit success page
+/success /thank-you.html 200

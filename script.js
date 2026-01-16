@@ -121,7 +121,10 @@ function initEmailSubscription() {
     const submitBtn = form.querySelector('.submit-btn');
 
     form.addEventListener('submit', function (e) {
-        console.log('📋 [DEBUG] Form submit event triggered');
+        // ALWAYS prevent default first to ensure our code runs
+        e.preventDefault();
+        
+        console.log('📋 [DEBUG] Form submit event triggered (prevented default)');
         
         const email = emailInput.value.trim();
         const consentCheckbox = form.querySelector('input[name="consent"]');
@@ -136,14 +139,12 @@ function initEmailSubscription() {
         if (!email || !isValidEmail(email)) {
             console.warn('⚠️ [DEBUG] Invalid email:', email);
             showMessage('Please enter a valid email address.', 'error');
-            e.preventDefault();
             return;
         }
 
         if (!consentCheckbox || !consentCheckbox.checked) {
             console.warn('⚠️ [DEBUG] Consent checkbox not checked');
             showMessage('Please agree to the privacy policy to continue.', 'error');
-            e.preventDefault();
             return;
         }
 
@@ -160,8 +161,7 @@ function initEmailSubscription() {
 
         if (isLocal) {
             // Local testing – simulate success
-            console.log('🏠 [DEBUG] LOCAL MODE: Preventing default and simulating submission');
-            e.preventDefault();
+            console.log('🏠 [DEBUG] LOCAL MODE: Simulating submission');
             
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
@@ -179,7 +179,6 @@ function initEmailSubscription() {
                     <i class="fas fa-arrow-right btn-icon"></i>
                 `;
 
-                // Local: redirect after short delay
                 setTimeout(() => {
                     console.log('🔄 [DEBUG] LOCAL MODE: Redirecting to thank-you.html');
                     window.location.href = '/thank-you.html';
@@ -189,8 +188,8 @@ function initEmailSubscription() {
             return;
         }
 
-        // Production – Let browser submit form NATIVELY
-        console.log('🚀 [DEBUG] PRODUCTION MODE: Allowing native form submission');
+        // Production – Submit form using native HTML form submission
+        console.log('🚀 [DEBUG] PRODUCTION MODE: Submitting form natively');
         console.log('📤 [DEBUG] Form will POST to:', form.action);
         console.log('📋 [DEBUG] Form data being submitted:', {
             'form-name': form.name,
@@ -199,15 +198,19 @@ function initEmailSubscription() {
             'bot-field': form.querySelector('[name="bot-field"]')?.value || ''
         });
         
-        // Don't preventDefault - let Netlify handle it
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="btn-text">Subscribing...</span>
             <div class="btn-spinner"></div>
         `;
         
-        console.log('⏳ [DEBUG] Native form submission starting...');
-        // Form submits naturally to action="/"
+        console.log('⏳ [DEBUG] Calling form.submit() now...');
+        
+        // Use setTimeout to ensure logs appear before submission
+        setTimeout(() => {
+            console.log('🎯 [DEBUG] Executing form.submit()');
+            form.submit();
+        }, 100);
     });
 
     function showMessage(text, type) {
