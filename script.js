@@ -107,19 +107,19 @@ function initCountdown() {
 // Email Subscription
 function initEmailSubscription() {
     const form = document.getElementById('subscriptionForm');
-    if (!form) {`✅ [DEBUG][${new Date().toISOString()}] Form initialized - BUILD ${BUILD_VERSION}:`, {
+    if (!form) {
+        console.error(`❌ [DEBUG][${new Date().toISOString()}] Form not found with id="subscriptionForm"`);
+        return;
+    }
+
+    console.log(`✅ [DEBUG][${new Date().toISOString()}] Form initialized - BUILD ${BUILD_VERSION}:`, {
         formId: form.id,
         formName: form.name,
         formAction: form.action,
         formMethod: form.method,
         hasNetlifyAttr: form.hasAttribute('data-netlify'),
         hasNetlifyPlainAttr: form.hasAttribute('netlify'),
-        allFormInputs: Array.from(form.elements).map(el => ({name: el.name, type: el.type})
-        formName: form.name,
-        formAction: form.action,
-        formMethod: form.method,
-        hasNetlifyAttr: form.hasAttribute('data-netlify'),
-        hasNetlifyPlainAttr: form.hasAttribute('netlify')
+        allFormInputs: Array.from(form.elements).map(el => ({name: el.name, type: el.type}))
     });
 
     const emailInput = document.getElementById('email');
@@ -129,7 +129,8 @@ function initEmailSubscription() {
     form.addEventListener('submit', function (e) {
         // ALWAYS prevent default first to ensure our code runs
         e.preventDefault();
-        t timestamp = new Date().toISOString();
+        
+        const timestamp = new Date().toISOString();
         console.log(`📋 [DEBUG][${timestamp}] Form submit event triggered (prevented default) - BUILD ${BUILD_VERSION}`);
         
         const email = emailInput.value.trim();
