@@ -188,15 +188,18 @@ function initEmailSubscription() {
             return;
         }
 
-        // Production – Submit form using native HTML form submission
-        console.log('🚀 [DEBUG] PRODUCTION MODE: Submitting form natively');
+        // Production – Submit form using fetch API for Netlify Forms
+        console.log('🚀 [DEBUG] PRODUCTION MODE: Using fetch to submit');
         console.log('📤 [DEBUG] Form will POST to:', form.action);
-        console.log('📋 [DEBUG] Form data being submitted:', {
-            'form-name': form.name,
-            'email': email,
-            'consent': consentCheckbox.value,
-            'bot-field': form.querySelector('[name="bot-field"]')?.value || ''
+        
+        // Build form data
+        const formData = new FormData(form);
+        const formObject = {};
+        formData.forEach((value, key) => {
+            formObject[key] = value;
         });
+        
+        console.log('📋 [DEBUG] Form data being submitted:', formObject);
         
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -204,13 +207,56 @@ function initEmailSubscription() {
             <div class="btn-spinner"></div>
         `;
         
-        console.log('⏳ [DEBUG] Calling form.submit() now...');
+        console.log('⏳ [DEBUG] Sending fetch request to Netlify Forms...');
         
-        // Use setTimeout to ensure logs appear before submission
-        setTimeout(() => {
-            console.log('🎯 [DEBUG] Executing form.submit()');
-            form.submit();
-        }, 100);
+        // Encode form data for Netlify
+        const formBody = Object.keys(formObject)
+            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(formObject[key]))
+            .join('&');
+        
+        console.log('📦 [DEBUG] Encoded form body:', formBody);
+        
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formBody
+        })
+        .then(response => {
+            console.log('✅ [DEBUG] Fetch response received:', {
+                status: response.status,
+                statusText: response.statusText,
+                ok: response.ok,
+                url: response.url
+            });
+            
+            if (response.ok) {
+                console.log('🎉 [DEBUG] Form submitted successfully!');
+                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
+                
+                // Wait 2 seconds before redirecting
+                setTimeout(() => {
+                    console.log('🔄 [DEBUG] Redirecting to thank-you page...');
+                    window.location.href = '/thank-you.html';
+                }, 2000);
+            } else {
+                console.error('❌ [DEBUG] Server returned error status:', response.status);
+                showMessage('Something went wrong. Please try again.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span class="btn-text">Notify Me</span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('❌ [DEBUG] Fetch error:', error);
+            showMessage('Network error. Please check your connection.', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+                <span class="btn-text">Notify Me</span>
+                <i class="fas fa-arrow-right btn-icon"></i>
+            `;
+        });
     });
 
     function showMessage(text, type) {
