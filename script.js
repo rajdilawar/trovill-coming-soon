@@ -1,13 +1,6 @@
 // Trovill Coming Soon - JavaScript functionality
-const BUILD_VERSION = 'v2.5.0';
-const BUILD_TIMESTAMP = '2026-01-17T00:30:00Z';
-
-console.log(`🎬 [DEBUG][${new Date().toISOString()}] Script loaded - BUILD: ${BUILD_VERSION} (${BUILD_TIMESTAMP})`);
-console.log('⏰ [DEBUG] Current browser time:', new Date().toString());
-console.log('🔄 [DEBUG] If you see an old build version, hard refresh (Ctrl+Shift+R or Cmd+Shift+R)');
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log(`✅ [DEBUG][${new Date().toISOString()}] DOM Content Loaded, initializing...`);
     
     // Initialize all functionality
     initLoader();
@@ -15,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // initEmailSubscription(); // Disabled - now using MailerLite embedded form
     initAnimations();
     initParallaxEffect();
-    
-    console.log(`🎉 [DEBUG][${new Date().toISOString()}] All initializations complete - BUILD ${BUILD_VERSION}`);
-    console.log(`📧 [DEBUG] Using MailerLite embedded form instead of custom form handler`);
 });
 
 // Loading Screen
@@ -108,7 +98,6 @@ function initCountdown() {
 // Email Subscription - DISABLED (Using MailerLite embedded form)
 // This function is no longer needed as we're using MailerLite's embedded form
 function initEmailSubscription() {
-    console.log('📧 [INFO] Email subscription handled by MailerLite embedded form');
     // MailerLite handles all form submission logic
     return;
 }
@@ -272,8 +261,6 @@ function initPerformanceMonitoring() {
             
             // Only log if we have valid timing data
             if (pageLoadTime > 0 && pageLoadTime < 60000) { // Less than 60 seconds is reasonable
-                console.log('Page load time:', pageLoadTime + 'ms');
-                
                 // You can send this data to your analytics service
                 // analytics.track('page_load_time', { duration: pageLoadTime });
             }
@@ -283,7 +270,6 @@ function initPerformanceMonitoring() {
 
 // Error Handling
 window.addEventListener('error', function(e) {
-    console.error('JavaScript error:', e.error);
     // You can send error reports to your monitoring service
 });
 
