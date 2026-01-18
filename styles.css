@@ -669,6 +669,254 @@ footer {
     transition: transform 0.3s ease;
 }
 
+/* ================================
+   MailerLite: FIX pill input + button alignment
+=================================== */
+
+/* Safety: make ML wrappers full-width and not constrain children */
+.ml-embedded,
+.ml-embedded .ml-form-embedWrapper,
+.ml-embedded .ml-form-embedBody,
+.ml-embedded .ml-form-embedContent,
+.ml-embedded form {
+  width: 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+
+/* Remove interfering styles from form content wrapper */
+.ml-embedded .ml-form-formContent.horozintalForm {
+  float: none !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 1) The pill container: make it flex row and lock height */
+.ml-embedded .ml-form-fieldRow,
+.ml-embedded .ml-form-horizontalRow {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+
+  height: 64px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+
+  background: rgba(255, 255, 255, 1) !important;
+  border: 3px solid rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+
+  /* prevent weird shrinking/overflow */
+  min-width: 0 !important;
+  float: none !important;
+  width: 100% !important;
+}
+
+/* 2) Ensure ML inner containers don't break the row layout */
+.ml-embedded .ml-form-fieldRow > *,
+.ml-embedded .ml-form-horizontalRow > * {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+/* 2b) Fix wrapper divs inside the horizontal row */
+.ml-embedded .ml-input-horizontal {
+  height: 100% !important;
+  display: flex !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  width: auto !important;
+}
+
+.ml-embedded .ml-button-horizontal {
+  height: 100% !important;
+  display: flex !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  width: auto !important;
+}
+
+.ml-embedded .horizontal-fields,
+.ml-embedded .ml-field-group {
+  height: 100% !important;
+  display: flex !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  width: auto !important;
+}
+
+/* 3) Input: take remaining space, fill height, no extra margins */
+.ml-embedded input[type="email"] {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  padding: 0 22px !important;
+  margin: 0 !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+
+  color: #2d2d2d !important;
+  font-size: 1.05rem !important;
+  line-height: 1 !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+}
+
+/* placeholder */
+.ml-embedded input[type="email"]::placeholder {
+  color: #666666 !important;
+  opacity: 1 !important;
+  font-weight: 400 !important;
+}
+
+/* 4) Button: fixed width, same height, no overflow */
+.ml-embedded button[type="submit"] {
+  flex: 0 0 auto !important;
+  height: 64px !important;
+
+  padding: 0 32px !important;
+  margin: 0 !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%) !important;
+  color: #333333 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  font-size: 0.95rem !important;
+  font-family: var(--font-body) !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+/* Add arrow after button text */
+.ml-embedded button[type="submit"]::after {
+  content: " →" !important;
+  margin-left: 8px !important;
+  font-size: 1.1rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* Button hover */
+.ml-embedded button[type="submit"]:hover {
+  transform: none !important;
+  filter: brightness(1.03) !important;
+}
+
+/* Animate arrow on hover */
+.ml-embedded button[type="submit"]:hover::after {
+  transform: translateX(4px) !important;
+}
+
+/* Focus state for pill */
+.ml-embedded .ml-form-fieldRow:focus-within,
+.ml-embedded .ml-form-horizontalRow:focus-within {
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3),
+              0 12px 40px rgba(212, 175, 55, 0.2) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Style checkbox and consent text */
+.ml-embedded .ml-form-checkboxRow {
+    margin-top: 1rem !important;
+    text-align: center !important;
+}
+
+.ml-embedded .ml-form-checkboxRow label {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    cursor: pointer !important;
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    color: #ffffff !important;
+    justify-content: center !important;
+}
+
+.ml-embedded input[type="checkbox"] {
+    margin-top: 0.2rem !important;
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer !important;
+    accent-color: var(--accent-gold) !important;
+    flex-shrink: 0 !important;
+}
+
+.ml-embedded .ml-form-checkboxRow a {
+    color: var(--accent-gold) !important;
+    text-decoration: underline !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.ml-embedded .ml-form-checkboxRow a:hover {
+    color: #f4d03f !important;
+}
+
+/* Success/Error messages */
+.ml-embedded .ml-form-successBody,
+.ml-embedded .ml-form-errorBody {
+    background: transparent !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    margin-top: 1rem !important;
+    text-align: center !important;
+}
+
+.ml-embedded .ml-form-successBody h4,
+.ml-embedded .ml-form-successBody p {
+    color: #4CAF50 !important;
+    font-weight: 500 !important;
+}
+
+.ml-embedded .ml-form-errorBody {
+    color: #f44336 !important;
+}
+
+/* 5) Mobile: stack input and button */
+@media (max-width: 768px) {
+  .ml-embedded .ml-form-fieldRow,
+  .ml-embedded .ml-form-horizontalRow {
+    flex-direction: column !important;
+    height: auto !important;
+    border-radius: 16px !important;
+  }
+
+  .ml-embedded input[type="email"] {
+    height: 56px !important;
+  }
+
+  .ml-embedded button[type="submit"] {
+    height: 56px !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     :root {
@@ -707,14 +955,19 @@ footer {
         font-size: 2rem;
     }
     
-    .input-group {
-        flex-direction: column;
-        border-radius: 12px;
+    .input-group,
+    .ml-embedded .ml-form-fieldRow,
+    .ml-embedded .ml-form-horizontalRow {
+        flex-direction: column !important;
+        border-radius: 12px !important;
+        height: auto !important;
     }
     
-    .submit-btn {
-        border-radius: 0;
-        justify-content: center;
+    .ml-embedded button[type="submit"] {
+        border-radius: 0 !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: none !important;
     }
     
     .features-preview {

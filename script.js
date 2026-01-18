@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
     initLoader();
     initCountdown();
-    initEmailSubscription();
+    // initEmailSubscription(); // Disabled - now using MailerLite embedded form
     initAnimations();
     initParallaxEffect();
     
     console.log(`🎉 [DEBUG][${new Date().toISOString()}] All initializations complete - BUILD ${BUILD_VERSION}`);
+    console.log(`📧 [DEBUG] Using MailerLite embedded form instead of custom form handler`);
 });
 
 // Loading Screen
@@ -104,208 +105,12 @@ function initCountdown() {
     setInterval(updateCountdown, 1000);
 }
 
-// Email Subscription
+// Email Subscription - DISABLED (Using MailerLite embedded form)
+// This function is no longer needed as we're using MailerLite's embedded form
 function initEmailSubscription() {
-    const form = document.getElementById('subscriptionForm');
-    if (!form) {
-        console.error(`❌ [DEBUG][${new Date().toISOString()}] Form not found with id="subscriptionForm"`);
-        return;
-    }
-
-    console.log(`✅ [DEBUG][${new Date().toISOString()}] Form initialized - BUILD ${BUILD_VERSION}:`, {
-        formId: form.id,
-        formName: form.name,
-        formAction: form.action,
-        formMethod: form.method,
-        hasNetlifyAttr: form.hasAttribute('data-netlify'),
-        hasNetlifyPlainAttr: form.hasAttribute('netlify'),
-        allFormInputs: Array.from(form.elements).map(el => ({name: el.name, type: el.type}))
-    });
-
-    const emailInput = document.getElementById('email');
-    const messageDiv = document.getElementById('formMessage');
-    const submitBtn = form.querySelector('.submit-btn');
-
-    form.addEventListener('submit', function (e) {
-        // ALWAYS prevent default first to ensure our code runs
-        e.preventDefault();
-        
-        const timestamp = new Date().toISOString();
-        console.log(`📋 [DEBUG][${timestamp}] Form submit event triggered (prevented default) - BUILD ${BUILD_VERSION}`);
-        
-        const email = emailInput.value.trim();
-        const consentCheckbox = form.querySelector('input[name="consent"]');
-
-        console.log(`📊 [DEBUG][${timestamp}] Form data:`, {
-            email: email,
-            consentChecked: consentCheckbox?.checked,
-            buildVersion: BUILD_VERSION,
-            timestamp: timestampbox?.checked,
-            formData: new FormData(form)
-        });
-
-        // Basic validation
-        if (!email || !isValidEmail(email)) {
-            console.warn('⚠️ [DEBUG] Invalid email:', email);
-            showMessage('Please enter a valid email address.', 'error');
-            return;
-        }
-
-        if (!consentCheckbox || !consentCheckbox.checked) {
-            console.warn('⚠️ [DEBUG] Consent checkbox not checked');
-            showMessage('Please agree to the privacy policy to continue.', 'error');
-            return;
-        }
-
-        const isLocal =
-            window.location.hostname === 'localhost' ||
-            window.location.hostname === '127.0.0.1' ||
-            window.location.hostname.startsWith('192.168.');
-
-        console.log(`🌍 [DEBUG][${timestamp}] Environment:`, {
-            hostname: window.location.hostname,
-            isLocal: isLocal,
-            fullUrl: window.location.href,
-            protocol: window.location.protocol,
-            buildVersion: BUILD_VERSION
-        });
-
-        if (isLocal) {
-            // Local testing – simulate success
-            console.log('🏠 [DEBUG] LOCAL MODE: Simulating submission');
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `
-                <span class="btn-text">Subscribing...</span>
-                <div class="btn-spinner"></div>
-            `;
-
-            setTimeout(() => {
-                console.log('✨ [DEBUG] LOCAL MODE: Showing success message');
-                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
-                form.reset();
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `
-                    <span class="btn-text">Notify Me</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                `;
-
-                setTimeout(() => {
-                    console.log('🔄 [DEBUG] LOCAL MODE: Redirecting to thank-you.html');
-                    window.location.href = '/thank-you.html';
-                }, 2000);
-            }, 1000);
-        } else {
-            // Production mode - submit to Netlify Forms
-            console.log(`🚀 [DEBUG][${timestamp}] PRODUCTION MODE: Using fetch to submit - BUILD ${BUILD_VERSION}`);
-            console.log(`📤 [DEBUG][${timestamp}] Target URL:`, window.location.origin + '/');
-            
-            // Build form data
-        const formData = new FormData(form);
-        const formObject = {};
-        formData.forEach((value, key) => {
-            formObject[key] = value;
-        });
-        
-        console.log(`📋 [DEBUG][${timestamp}] Form data being submitted:`, formObject);
-        console.log(`🔍 [DEBUG][${timestamp}] Checking hidden form existence...`);
-        const hiddenForm = document.querySelector('form[name="email-notifications"][hidden]');
-        console.log(`👻 [DEBUG][${timestamp}] Hidden form found:`, !!hiddenForm, hiddenForm ? {
-            method: hiddenForm.method,
-            action: hiddenForm.action,
-            hasDataNetlify: hiddenForm.hasAttribute('data-netlify')
-        } : 'NOT FOUND');
-        
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <span class="btn-text">Subscribing...</span>
-            <div class="btn-spinner"></div>
-        `;
-        
-        console.log(`⏳ [DEBUG][${timestamp}] Sending fetch request to Netlify Forms...`);
-        
-        // Encode form data for Netlify
-        const formBody = Object.keys(formObject)
-            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(formObject[key]))
-            .join('&');
-        
-        console.log(`📦 [DEBUG][${timestamp}] Encoded form body:`, formBody);
-        
-        fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formBody
-        })
-        .then(response => {
-            const responseTime = new Date().toISOString();
-            console.log(`✅ [DEBUG][${responseTime}] Fetch response received - BUILD ${BUILD_VERSION}:`, {
-                status: response.status,
-                statusText: response.statusText,
-                ok: response.ok,
-                url: response.url,
-                type: response.type,
-                redirected: response.redirected,
-                headers: {
-                    contentType: response.headers.get('content-type'),
-                    server: response.headers.get('server')
-                }
-            });
-            
-            if (response.ok) {
-                console.log(`🎉 [DEBUG][${responseTime}] Form submitted successfully! - BUILD ${BUILD_VERSION}`);
-                showMessage('✨ Thank you! We\'ll notify you when we launch.', 'success');
-                
-                // Wait 2 seconds before redirecting
-                setTimeout(() => {
-                    console.log(`🔄 [DEBUG][${new Date().toISOString()}] Redirecting to thank-you page...`);
-                    window.location.href = '/thank-you.html';
-                }, 2000);
-            } else {
-                console.error(`❌ [DEBUG][${responseTime}] Server returned error status:`, response.status);
-                console.error(`🔍 [DEBUG][${responseTime}] This likely means Netlify Forms endpoint not created properly`);
-                console.error(`💡 [DEBUG][${responseTime}] Check: 1) Hidden form exists, 2) Deploy completed, 3) Form detected in build log`);
-                showMessage('Something went wrong. Please try again.', 'error');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `
-                    <span class="btn-text">Notify Me</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
-                `;
-            }
-        })
-        .catch(error => {
-            const errorTime = new Date().toISOString();
-            console.error(`❌ [DEBUG][${errorTime}] Fetch error:`, error);
-            console.error(`🔍 [DEBUG][${errorTime}] This may be a network error or CORS issue`);
-            showMessage('Network error. Please check your connection.', 'error');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `
-                <span class="btn-text">Notify Me</span>
-                <i class="fas fa-arrow-right btn-icon"></i>
-            `;
-        });
-        }
-    });
-
-    function showMessage(text, type) {
-        if (!messageDiv) return;
-        messageDiv.textContent = text;
-        messageDiv.className = `form-message ${type}`;
-
-        setTimeout(() => {
-            messageDiv.textContent = '';
-            messageDiv.className = 'form-message';
-        }, 5000);
-    }
-
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    function trackSubscription(email) {
-        console.log('New subscription:', email);
-        // Hook for future analytics
-    }
+    console.log('📧 [INFO] Email subscription handled by MailerLite embedded form');
+    // MailerLite handles all form submission logic
+    return;
 }
 
 // Animations and Scroll Effects

@@ -36,6 +36,16 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '2044177');
+    </script>
+    <!-- End MailerLite Universal -->
 </head>
 <body>
     <!-- Background Video/Image -->
@@ -67,48 +77,17 @@
                 <div class="subscription-container">
                     <h3 class="subscription-title">Join the Waiting List</h3>
                     <p class="subscription-subtitle">No spam promised. Get early access to our first drop, private pre-launch pricing, and Berlin launch updates.</p>
-                    <form
-                      class="subscription-form"
-                      id="subscriptionForm"
-                      name="email-notifications"
-                      method="POST"
-                      data-netlify="true"
-                      netlify
-                      action="/success"
-                      netlify-honeypot="bot-field"
-                    >
-                        <input type="hidden" name="form-name" value="email-notifications">
-                        
-                        <!-- Honeypot for spam protection -->
-                        <p style="display:none;">
-                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-                        </p>
-                        
-                        <div class="input-group">
-                            <input 
-                                type="email" 
-                                id="email"
-                                name="email"
-                                class="email-input" 
-                                placeholder="Enter your email address"
-                                required
-                            >
-                            <button type="submit" class="submit-btn" title="I consent to receive marketing emails from Trovill and agree to the Privacy Policy. All data will be deleted within 6 months.">
-                                <span class="btn-text">Notify Me</span>
-                                <i class="fas fa-arrow-right btn-icon"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- GDPR Consent -->
-                        <div class="consent-container">
-                            <label class="consent-label">
-                                <input type="checkbox" name="consent" value="yes" required class="consent-checkbox">
-                                <span class="consent-text">I consent to receive marketing emails from Trovill and agree to the <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>. All data will be deleted within 6 months.</span>
-                            </label>
-                        </div>
-                        
-                        <div class="form-message" id="formMessage"></div>
-                    </form>
+                    
+                    <!-- MailerLite Embedded Form -->
+                    <div class="ml-embedded" data-form="cZnHoa"></div>
+                    <script>
+                        // Force MailerLite form to load
+                        if (window.ml) {
+                            console.log('MailerLite loaded successfully');
+                        } else {
+                            console.error('MailerLite not loaded');
+                        }
+                    </script>
                 </div>
                 
                 <!-- Features Preview -->
@@ -162,14 +141,6 @@
             <div class="loading-spinner"></div>
         </div>
     </div>
-    
-    <!-- Hidden form for Netlify build-time detection -->
-    <form name="email-notifications" method="POST" action="/" data-netlify="true" netlify hidden>
-        <input type="hidden" name="form-name" value="email-notifications" />
-        <input type="text" name="bot-field" />
-        <input type="email" name="email" required />
-        <input type="checkbox" name="consent" value="yes" required />
-    </form>
     
     <!-- Custom JavaScript -->
     <script src="script.js"></script>
