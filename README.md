@@ -24,12 +24,16 @@ A beautiful, responsive coming soon page for Trovill fashion brand, built for Gi
 
 ## 🚀 Deployment
 
-This site is configured for GitHub Pages deployment:
+This site is deployed on GitHub Pages at:
 
+**Live Site:** https://trovill.com
+
+### Setup Instructions:
 1. Push code to your GitHub repository
 2. Go to Settings → Pages
-3. Select source branch (usually `main` or `gh-pages`)
-4. Your site will be available at: `https://yourusername.github.io/trovillComingSoon`
+3. Select source branch (usually `main`)
+4. Configure custom domain: `trovill.com`
+5. Your site will be available at: `https://trovill.com`
 
 ## ⚙️ Customization
 
