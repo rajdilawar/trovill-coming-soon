@@ -2,10 +2,10 @@
 # This file tells GitHub Pages how to build and serve your site
 
 # Site settings
-title: "Trovill - Premium Fashion Coming Soon"
-description: "Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style."
-url: "https://yourusername.github.io"
-baseurl: "/trovillComingSoon"
+title: "Trovill – Modern Western-Style Apparel"
+description: "Berlin-based fashion brand creating modern Western-style apparel (both knit and woven) with conscious craftsmanship."
+url: "https://trovill.com"
+baseurl: ""
 
 # Build settings
 markdown: kramdown

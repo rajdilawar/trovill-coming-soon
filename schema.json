@@ -2,22 +2,21 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Trovill",
-  "description": "Premium Fashion Brand Coming Soon. Stay tuned for the latest in luxury fashion and style.",
-  "url": "https://yourusername.github.io/trovillComingSoon/",
-  "logo": "https://yourusername.github.io/trovillComingSoon/assets/logo.png",
+  "description": "Berlin-based fashion brand creating modern Western-style apparel (both knit and woven) with conscious craftsmanship.",
+  "url": "https://trovill.com/",
+  "logo": "https://trovill.com/assets/trovillBrand.png",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "",
     "contactType": "customer service",
-    "email": "hello@trovill.com"
+    "email": "info@trovill.com"
   },
   "sameAs": [
-    "https://instagram.com/trovill",
-    "https://facebook.com/trovill",
-    "https://twitter.com/trovill",
-    "https://pinterest.com/trovill"
+    "https://www.instagram.com/trovill.fashion/",
+    "https://www.facebook.com/trovill",
+    "https://www.linkedin.com/company/trovill/"
   ],
   "foundingDate": "2024",
   "industry": "Fashion",
-  "keywords": "premium fashion, luxury clothing, designer wear, fashion brand, style, trovill"
+  "keywords": "trovill, berlin fashion brand, modern western-style apparel, menswear, shirts, polos, sustainable fashion"
 }

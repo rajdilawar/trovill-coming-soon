@@ -2,10 +2,9 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://yourusername.github.io/trovillComingSoon/sitemap.xml
+Sitemap: https://trovill.com/sitemap.xml
 
-# Disallow crawling of specific paths (none for this simple site)
-# Disallow: /private/
+# Disallow crawling of specific paths
+Disallow: /assets/README.md
 
-# Crawl delay (optional)
-Crawl-delay: 10
+# Crawl delay (optional - removed for better indexing)
