@@ -1,10 +1,15 @@
 User-agent: *
 Allow: /
 
+# Disallow internal/utility pages
+Disallow: /thank-you.html
+Disallow: /assets/README.md
+Disallow: /README.md
+Disallow: /ACTION_ITEMS.md
+Disallow: /IMPLEMENTATION_SUMMARY.md
+Disallow: /SEO_CHECKLIST.md
+Disallow: /schema.json
+Disallow: /assets/SVG/Untitled1.sfd
+
 # Sitemap location
 Sitemap: https://trovill.com/sitemap.xml
-
-# Disallow crawling of specific paths
-Disallow: /assets/README.md
-
-# Crawl delay (optional - removed for better indexing)

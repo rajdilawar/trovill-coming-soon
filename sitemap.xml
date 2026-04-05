@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage -->
   <url>
     <loc>https://trovill.com/</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://trovill.com/assets/SVG/TrovillLogo.svg</image:loc>
+      <image:title>Trovill Logo – Modern Western-Style Apparel from Berlin</image:title>
+      <image:caption>Trovill brand logo for a Berlin-based fashion brand creating modern Western-style menswear</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://trovill.com/assets/trovillBrand.png</image:loc>
+      <image:title>Trovill Brand Icon</image:title>
+      <image:caption>Trovill fashion brand icon</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://trovill.com/assets/og-image.jpg</image:loc>
+      <image:title>Trovill – Timeless Pieces, Crafted with Soul</image:title>
+      <image:caption>Trovill modern western-style apparel for men, launching Spring 2026 from Berlin</image:caption>
+    </image:image>
   </url>
+
+  <!-- Privacy Policy -->
   <url>
     <loc>https://trovill.com/privacy-policy.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
+
 </urlset>
