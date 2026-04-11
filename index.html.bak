@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trovill — modern Western-style menswear from Berlin. Thoughtfully crafted essentials launching Spring / Summer 2026. Join the waitlist.">
+    <meta name="keywords" content="trovill, berlin fashion brand, modern western-style apparel, menswear, shirts, polos">
+    <meta name="author" content="Trovill">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://trovill.com/">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Trovill — Modern Western-Style Apparel from Berlin">
+    <meta property="og:description" content="Thoughtfully crafted menswear. Launching Spring / Summer 2026. Join the waitlist for early access.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trovill.com/">
+    <meta property="og:image" content="https://trovill.com/assets/og-image.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trovill — Modern Western-Style Apparel from Berlin">
+    <meta name="twitter:description" content="Thoughtfully crafted menswear. Launching Spring / Summer 2026.">
+    <meta name="twitter:image" content="https://trovill.com/assets/og-image.jpg">
+
+    <title>Trovill — Modern Western-Style Apparel from Berlin</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Trovill",
+      "description": "Berlin-based fashion brand creating modern Western-style menswear with conscious craftsmanship.",
+      "url": "https://trovill.com/",
+      "logo": "https://trovill.com/assets/trovillBrand.png",
+      "sameAs": [
+        "https://www.instagram.com/trovill.fashion/",
+        "https://www.linkedin.com/company/trovill/"
+      ],
+      "foundingDate": "2024",
+      "industry": "Fashion",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Berlin",
+        "addressCountry": "DE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "info@trovill.com"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Trovill",
+      "url": "https://trovill.com/",
+      "description": "Modern Western-style menswear from Berlin. Launching Spring / Summer 2026.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Trovill",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://trovill.com/assets/trovillBrand.png"
+        }
+      }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" href="assets/trovillBrand.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/trovillBrand.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '2044177');
+    </script>
+    <!-- End MailerLite Universal -->
+</head>
+<body>
+
+    <!-- ===== HEADER / NAV ===== -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="/" class="header-logo" aria-label="Trovill — Home">
+                <img src="assets/SVG/TrovillLogo.svg" alt="Trovill" width="140" height="40">
+            </a>
+            <span class="header-label">Berlin</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== 1. HERO ===== -->
+        <section class="hero" aria-label="Introduction">
+            <div class="hero-images">
+                <div class="hero-image hero-image--left">
+                    <img src="assets/heroImage1.png"
+                         alt="Editorial menswear — model in Trovill apparel against a textured stone wall"
+                         loading="eager"
+                         width="720" height="960">
+                </div>
+                <div class="hero-image hero-image--right">
+                    <img src="assets/heroImage2.png"
+                         alt="Close-up of natural linen fabric texture"
+                         loading="eager"
+                         width="720" height="960">
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-headline">Modern Western-Style<br>Apparel from Berlin</h1>
+                <p class="hero-subline">Thoughtfully crafted menswear. Launching Spring&nbsp;/&nbsp;Summer&nbsp;2026.</p>
+                <div class="hero-cta">
+                    <a href="#waitlist" class="btn btn--primary">Join the Waitlist</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 2. BRAND STATEMENT ===== -->
+        <section class="brand-statement" aria-label="Brand statement">
+            <div class="container">
+                <h2 class="brand-statement__heading">Crafted with intention.<br>Worn with ease.</h2>
+                <p class="brand-statement__body">Trovill creates timeless menswear shaped by quiet luxury, honest materials, and refined everyday wearability.</p>
+            </div>
+        </section>
+
+        <!-- ===== 3. BRAND PILLARS ===== -->
+        <section class="pillars" aria-label="Brand pillars">
+            <div class="container">
+                <div class="pillars-grid">
+                    <article class="pillar">
+                        <h3 class="pillar__title">Conscious Craftsmanship</h3>
+                        <p class="pillar__body">Designed with care and built to last.</p>
+                    </article>
+                    <article class="pillar">
+                        <h3 class="pillar__title">Honest Materials</h3>
+                        <p class="pillar__body">Natural textures and elevated essentials.</p>
+                    </article>
+                    <article class="pillar">
+                        <h3 class="pillar__title">Soulfulness</h3>
+                        <p class="pillar__body">Pieces that feel personal over time.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 4. WAITLIST / EMAIL CAPTURE ===== -->
+        <section class="waitlist" id="waitlist" aria-label="Join the waitlist">
+            <div class="container waitlist-inner">
+                <h2 class="waitlist__heading">Get Early Access</h2>
+                <p class="waitlist__subline">Early access to our first collection and launch&nbsp;updates.</p>
+                <!-- MailerLite Embedded Form -->
+                <div class="ml-embedded" data-form="cZnHoa"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== 5. FOOTER ===== -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/SVG/TrovillLogo.svg" alt="Trovill" class="footer-logo" width="100" height="28">
+                <p class="footer-location">Berlin, Germany</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="mailto:info@trovill.com">info@trovill.com</a>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://www.instagram.com/trovill.fashion/" aria-label="Trovill on Instagram" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/trovill/" aria-label="Trovill on LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+            </div>
+
+            <p class="footer-copy">&copy; 2026 Trovill. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+// Trovill — Coming Soon
+
+(function () {
+  'use strict';
+
+  // ── Header scroll effect ──
+  const header = document.querySelector('.site-header');
+  if (header) {
+    let ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          header.classList.toggle('scrolled', window.scrollY > 40);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ── Reveal-on-scroll ──
+  const revealEls = document.querySelectorAll('.brand-statement, .pillars, .waitlist, .pillar');
+  if (revealEls.length) {
+    revealEls.forEach(function (el) { el.classList.add('reveal'); });
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
+  }
+
+  // ── Smooth scroll for anchor links ──
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── MailerLite form restyling ──
+  // MailerLite injects <style> tags with high-specificity ID-based selectors
+  // (e.g. #mlb2-XXXXX.ml-form-embedContainer .ml-form-embedWrapper ...).
+  // We detect the container ID, then inject a <style> with equal or higher
+  // specificity appended AFTER theirs so our !important declarations win.
+  function injectMLOverride() {
+    var container = document.querySelector('.ml-form-embedContainer[id]');
+    if (!container || document.getElementById('ml-override')) return false;
+
+    var id = container.id; // e.g. "mlb2-35863571"
+    // Build prefix matching MailerLite's deepest selectors
+    var pre = '#' + id + '.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody';
+
+    var s = document.createElement('style');
+    s.id = 'ml-override';
+    s.textContent = [
+      // Wrapper resets
+      '#' + id + '.ml-form-embedContainer{width:100%!important;margin:0 auto!important}',
+      '#' + id + '.ml-form-embedContainer .ml-form-embedWrapper{background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;display:block!important;width:100%!important;max-width:480px!important;margin:0 auto!important}',
+      pre + '{background:transparent!important;padding:0!important}',
+      pre + ' .ml-form-embedContent{padding:0!important;margin:0!important}',
+      pre + ' .ml-form-formContent.horozintalForm{float:none!important;height:auto!important;margin:0!important;padding:0!important}',
+
+      // Row container (the pill-shaped wrapper)
+      pre + ' .ml-form-horizontalRow,' + pre + ' .ml-form-fieldRow{display:flex!important;flex-direction:row!important;align-items:stretch!important;height:56px!important;border:1px solid #D8D1C7!important;border-radius:0!important;overflow:hidden!important;background:#fff!important;box-shadow:none!important;gap:0!important;width:100%!important;max-width:480px!important;margin:0 auto!important;padding:0!important}',
+
+      // Inner layout wrappers
+      pre + ' .ml-form-horizontalRow .ml-input-horizontal{flex:1 1 auto!important;height:100%!important;display:flex!important;margin:0!important;padding:0!important;float:none!important;width:auto!important}',
+      pre + ' .ml-form-horizontalRow .ml-button-horizontal{flex:0 0 auto!important;height:100%!important;display:flex!important;margin:0!important;padding:0!important;float:none!important;width:auto!important}',
+      pre + ' .ml-form-horizontalRow .horizontal-fields,' + pre + ' .ml-form-horizontalRow .ml-field-group{height:100%!important;display:flex!important;flex:1 1 auto!important;margin:0!important;padding:0!important;float:none!important;width:auto!important}',
+
+      // Input field
+      pre + ' .ml-form-horizontalRow input,' + pre + ' .ml-form-fieldRow input{flex:1 1 auto!important;height:100%!important;padding:0 1.25rem!important;margin:0!important;border:0!important;border-radius:0!important;outline:none!important;background:transparent!important;color:#111!important;font-size:0.88rem!important;font-family:Inter,sans-serif!important;font-weight:300!important;letter-spacing:0.02em!important;width:100%!important;box-shadow:none!important}',
+
+      // Submit button — full specificity match
+      pre + ' .ml-form-horizontalRow button,' +
+      pre + ' .ml-form-fieldRow button,' +
+      pre + ' .ml-form-embedSubmit button,' +
+      '#' + id + ' .ml-button-horizontal button{' +
+        'flex:0 0 auto!important;height:56px!important;padding:0 2rem!important;margin:0!important;' +
+        'border:0!important;border-left:1px solid #D8D1C7!important;border-radius:0!important;' +
+        'background-color:#111111!important;background-image:none!important;background:#111111!important;' +
+        'color:#F7F4EE!important;font-family:Inter,sans-serif!important;font-weight:400!important;' +
+        'font-size:0.72rem!important;letter-spacing:0.15em!important;text-transform:uppercase!important;' +
+        'cursor:pointer!important;box-shadow:none!important;display:inline-flex!important;' +
+        'align-items:center!important;justify-content:center!important;white-space:nowrap!important;' +
+        'width:auto!important;min-width:0!important;max-width:none!important;border-color:#111111!important' +
+      '}',
+      pre + ' button::after{content:none!important}',
+      pre + ' button:hover{background:#5F5A54!important;background-color:#5F5A54!important}',
+
+      // Mobile button
+      '#' + id + ' .ml-mobileButton-horizontal button{background-color:#111111!important;background:#111111!important;border:0!important;border-radius:0!important;color:#F7F4EE!important;font-family:Inter,sans-serif!important;font-weight:400!important;font-size:0.72rem!important;letter-spacing:0.15em!important;text-transform:uppercase!important;border-color:#111111!important}',
+
+      // Consent / permissions text
+      pre + ' .ml-form-embedPermissions p,' + pre + ' .ml-form-embedPermissions span,' +
+      pre + ' .ml-form-embedPermissions label,' + pre + ' .ml-form-checkboxRow label,' +
+      pre + ' .ml-form-checkboxRow p,' + pre + ' .ml-form-checkboxRow span{' +
+        'color:#5F5A54!important;font-size:0.8rem!important;font-weight:300!important;font-family:Inter,sans-serif!important' +
+      '}',
+
+      // Override letter-spacing and text-transform that MailerLite resets
+      '#' + id + '.ml-form-embedContainer button{text-transform:uppercase!important;letter-spacing:0.15em!important}'
+    ].join('\n');
+
+    // Insert AFTER the MailerLite embed (must be later in document order
+    // than MailerLite's own <style> tags so equal-specificity !important wins)
+    var mlEmbed = document.querySelector('.ml-embedded');
+    if (mlEmbed && mlEmbed.parentNode) {
+      mlEmbed.parentNode.insertBefore(s, mlEmbed.nextSibling);
+    } else {
+      document.head.appendChild(s);
+    }
+    return true;
+  }
+
+  // Observe for MailerLite container injection, then inject our override <style>
+  var mlObserver = new MutationObserver(function () {
+    if (injectMLOverride()) {
+      mlObserver.disconnect();
+    }
+  });
+  mlObserver.observe(document.body, { childList: true, subtree: true });
+
+  // Also try immediately and via interval (MailerLite may already be present)
+  if (!injectMLOverride()) {
+    var mlRetries = 0;
+    var mlInterval = setInterval(function () {
+      if (injectMLOverride() || ++mlRetries > 30) clearInterval(mlInterval);
+    }, 300);
+  }
+})();

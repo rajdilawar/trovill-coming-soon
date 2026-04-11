@@ -1,314 +1,178 @@
-// Trovill Coming Soon - JavaScript functionality
+// Trovill — Editorial Landing Page
 
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Initialize all functionality
-    initLoader();
-    initCountdown();
-    // initEmailSubscription(); // Disabled - now using MailerLite embedded form
-    initAnimations();
-    initParallaxEffect();
-});
+(function () {
+  'use strict';
 
-// Loading Screen
-function initLoader() {
-    const loadingScreen = document.getElementById('loadingScreen');
+  // -- Smooth scroll to waitlist --
+  window.scrollToWL = function() {
+    var wlSection = document.getElementById('wl-section');
+    if (wlSection) {
+      wlSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function() {
+        var emailInput = document.getElementById('heroEmail');
+        if (emailInput) emailInput.focus();
+      }, 600);
+    }
+  };
+
+  // -- Waitlist form submission --
+  var heroEmail = document.getElementById('heroEmail');
+  var submitBtn = document.getElementById('heroSubmit');
+  var wlSuccess = document.getElementById('wl-success');
+  var wlAlready = document.getElementById('wl-already');
+  var wlRow = document.querySelector('.wl-row');
+  var wlConsent = document.getElementById('wl-consent-check');
+  var wlConsentSection = document.querySelector('.wl-consent');
+
+  function showSuccess() {
+    wlRow.style.display = 'none';
+    if (wlConsentSection) wlConsentSection.style.display = 'none';
+    if (wlSuccess) wlSuccess.style.display = 'block';
+    heroEmail.value = '';
+  }
+
+  function showAlreadySubscribed() {
+    wlRow.style.display = 'none';
+    if (wlConsentSection) wlConsentSection.style.display = 'none';
+    if (wlAlready) wlAlready.style.display = 'block';
+    heroEmail.value = '';
+  }
+
+  function showError() {
+    heroEmail.classList.add('error');
+    heroEmail.placeholder = 'Something went wrong. Try again.';
+    setTimeout(function() {
+      heroEmail.classList.remove('error');
+      heroEmail.placeholder = 'your@email.com';
+    }, 2000);
+  }
+
+  // MailerLite callback for successful subscription
+  window.ml_webform_success_2044177 = function() {
+    showSuccess();
+  };
+
+  // Listen for MailerLite form messages (including already subscribed)
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'mailerlite') {
+      if (event.data.action === 'success') {
+        showSuccess();
+      } else if (event.data.action === 'already_subscribed') {
+        showAlreadySubscribed();
+      }
+    }
+  });
+
+  function handleWL(e) {
+    if (e) e.preventDefault();
     
-    // Hide loading screen after content loads
-    window.addEventListener('load', function() {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            // Remove from DOM after animation
-            setTimeout(() => {
-                loadingScreen.remove();
-            }, 500);
-        }, 1000); // Show loader for at least 1 second
+    var email = heroEmail.value.trim();
+    if (!email || !isValidEmail(email)) {
+      heroEmail.classList.add('error');
+      heroEmail.placeholder = 'Please enter a valid email';
+      setTimeout(function() {
+        heroEmail.classList.remove('error');
+        heroEmail.placeholder = 'your@email.com';
+      }, 1500);
+      return;
+    }
+    
+    // Remove error class if present
+    heroEmail.classList.remove('error');
+
+    // Check if email was already submitted
+    if (isEmailSubscribed(email)) {
+      showAlreadySubscribed();
+      return;
+    }
+
+    // Check consent checkbox
+    if (!wlConsent || !wlConsent.checked) {
+      if (wlConsentSection) {
+        wlConsentSection.classList.add('error');
+        setTimeout(function() {
+          wlConsentSection.classList.remove('error');
+        }, 1500);
+      }
+      return;
+    }
+    
+    // Remove error classes if present
+    if (wlConsentSection) wlConsentSection.classList.remove('error');
+
+    var origText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+
+    // Save email to localStorage
+    saveSubscribedEmail(email);
+
+    // Use MailerLite embedded form
+    triggerMLFallback(email);
+    
+    // Re-enable button after a short delay
+    setTimeout(function() {
+      submitBtn.textContent = origText;
+      submitBtn.disabled = false;
+    }, 2000);
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isEmailSubscribed(email) {
+    try {
+      var subscribedEmails = JSON.parse(localStorage.getItem('trovill_subscribed') || '[]');
+      return subscribedEmails.indexOf(email.toLowerCase()) !== -1;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  function saveSubscribedEmail(email) {
+    try {
+      var subscribedEmails = JSON.parse(localStorage.getItem('trovill_subscribed') || '[]');
+      if (subscribedEmails.indexOf(email.toLowerCase()) === -1) {
+        subscribedEmails.push(email.toLowerCase());
+        localStorage.setItem('trovill_subscribed', JSON.stringify(subscribedEmails));
+      }
+    } catch(e) {
+      // localStorage not available
+    }
+  }
+
+  function triggerMLFallback(email) {
+    var mlInput = document.querySelector('.ml-embedded input[type="email"]');
+    var mlBtn = document.querySelector('.ml-embedded button[type="submit"]');
+    if (mlInput && mlBtn) {
+      var nativeSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype, 'value'
+      ).set;
+      nativeSetter.call(mlInput, email);
+      mlInput.dispatchEvent(new Event('input', { bubbles: true }));
+      mlInput.dispatchEvent(new Event('change', { bubbles: true }));
+      setTimeout(function() { 
+        mlBtn.click(); 
+        // Show success message after form submission
+        setTimeout(function() {
+          showSuccess();
+        }, 800);
+      }, 100);
+    } else {
+      showError();
+    }
+  }
+
+  // -- Event listeners --
+  if (submitBtn) {
+    submitBtn.addEventListener('click', handleWL);
+  }
+
+  if (heroEmail) {
+    heroEmail.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleWL(e);
     });
-}
+  }
 
-// Countdown Timer
-function initCountdown() {
-    // Set launch date (30 days from now - you can customize this)
-    const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 30);
-    launchDate.setHours(12, 0, 0, 0); // Set to noon
-    
-    const countdownElements = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds')
-    };
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = launchDate.getTime() - now;
-        
-        if (distance > 0) {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            // Update display with smooth transition
-            updateCountdownElement(countdownElements.days, days);
-            updateCountdownElement(countdownElements.hours, hours);
-            updateCountdownElement(countdownElements.minutes, minutes);
-            updateCountdownElement(countdownElements.seconds, seconds);
-        } else {
-            // Countdown finished
-            countdownElements.days.textContent = '00';
-            countdownElements.hours.textContent = '00';
-            countdownElements.minutes.textContent = '00';
-            countdownElements.seconds.textContent = '00';
-            
-            // Show launch message
-            showLaunchMessage();
-        }
-    }
-    
-    function updateCountdownElement(element, value) {
-        if (!element) return; // Add null check
-        const formattedValue = value.toString().padStart(2, '0');
-        if (element.textContent !== formattedValue) {
-            element.style.transform = 'scale(1.1)';
-            element.textContent = formattedValue;
-            setTimeout(() => {
-                element.style.transform = 'scale(1)';
-            }, 150);
-        }
-    }
-    
-    function showLaunchMessage() {
-        const countdownContainer = document.querySelector('.countdown-container');
-        countdownContainer.innerHTML = `
-            <div class="launch-message">
-                <h3 class="launch-title">🎉 We're Live!</h3>
-                <p class="launch-subtitle">Thank you for your patience. Explore our collection now!</p>
-                <button class="launch-btn" onclick="window.open('#', '_blank')">Visit Store</button>
-            </div>
-        `;
-    }
-    
-    // Update every second
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
-
-// Email Subscription - DISABLED (Using MailerLite embedded form)
-// This function is no longer needed as we're using MailerLite's embedded form
-function initEmailSubscription() {
-    // MailerLite handles all form submission logic
-    return;
-}
-
-// Animations and Scroll Effects
-function initAnimations() {
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe animated elements
-    const animatedElements = document.querySelectorAll('.feature-item, .countdown-item');
-    animatedElements.forEach(el => {
-        observer.observe(el);
-    });
-    
-    // Add CSS for animation
-    const style = document.createElement('style');
-    style.textContent = `
-        .animate-in {
-            animation: slideInUp 0.6s ease-out forwards;
-        }
-        
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .btn-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        .launch-message {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(76, 175, 80, 0.1);
-            border-radius: 16px;
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            backdrop-filter: blur(10px);
-        }
-        
-        .launch-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #4CAF50;
-        }
-        
-        .launch-subtitle {
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-        
-        .launch-btn {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            border: none;
-            border-radius: 25px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .launch-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Parallax Effect
-function initParallaxEffect() {
-    let ticking = false;
-    
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.feature-item');
-        
-        parallaxElements.forEach((element, index) => {
-            const speed = 0.02 + (index * 0.01);
-            const yPos = -(scrolled * speed);
-            element.style.transform = `translateY(${yPos}px)`;
-        });
-        
-        ticking = false;
-    }
-    
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }
-    
-    window.addEventListener('scroll', requestTick);
-}
-
-// Social Media Integration
-function initSocialIntegration() {
-    const socialLinks = document.querySelectorAll('.social-link');
-    
-    socialLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const platform = this.querySelector('i').classList[1].split('-')[1];
-            
-            // You can add your actual social media links here
-            const socialUrls = {
-                instagram: 'https://instagram.com/trovill',
-                facebook: 'https://facebook.com/trovill',
-                twitter: 'https://twitter.com/trovill',
-                pinterest: 'https://pinterest.com/trovill'
-            };
-            
-            if (socialUrls[platform]) {
-                window.open(socialUrls[platform], '_blank');
-            }
-        });
-    });
-}
-
-// Keyboard Navigation
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && e.target === document.getElementById('email')) {
-        document.getElementById('subscriptionForm').requestSubmit();
-    }
-});
-
-// Performance Monitoring
-function initPerformanceMonitoring() {
-    // Monitor page load performance
-    window.addEventListener('load', function() {
-        if (performance && performance.timing) {
-            const perfData = performance.timing;
-            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-            
-            // Only log if we have valid timing data
-            if (pageLoadTime > 0 && pageLoadTime < 60000) { // Less than 60 seconds is reasonable
-                // You can send this data to your analytics service
-                // analytics.track('page_load_time', { duration: pageLoadTime });
-            }
-        }
-    });
-}
-
-// Error Handling
-window.addEventListener('error', function(e) {
-    // You can send error reports to your monitoring service
-});
-
-// Initialize performance monitoring
-initPerformanceMonitoring();
-
-// Utility Functions
-const Utils = {
-    // Debounce function for performance
-    debounce: function(func, wait, immediate) {
-        let timeout;
-        return function executedFunction() {
-            const context = this;
-            const args = arguments;
-            const later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    },
-    
-    // Throttle function for scroll events
-    throttle: function(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
-};
-
-// Export utilities for use in other scripts
-window.TrovillUtils = Utils;
+})();

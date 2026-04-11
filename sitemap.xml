@@ -6,11 +6,11 @@
   <!-- Homepage -->
   <url>
     <loc>https://trovill.com/</loc>
-    <lastmod>2026-04-03</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://trovill.com/assets/SVG/TrovillLogo.svg</image:loc>
+      <image:loc>https://trovill.com/assets/SVG/svgTrovill.svg</image:loc>
       <image:title>Trovill Logo – Modern Western-Style Apparel from Berlin</image:title>
       <image:caption>Trovill brand logo for a Berlin-based fashion brand creating modern Western-style menswear</image:caption>
     </image:image>
@@ -29,7 +29,7 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://trovill.com/privacy-policy.html</loc>
-    <lastmod>2026-04-03</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
