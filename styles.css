@@ -191,19 +191,12 @@ h1 em {
 .hero-rule {
   display:flex;
   align-items:center;
-  gap:1rem;
   margin-bottom:1.5rem;
 }
 .hero-rule-line {
-  flex:1;
-  max-width:40px;
+  width:60px;
   height:0.5px;
   background:rgba(26,21,16,0.2);
-}
-.monstera-icon {
-  width:18px;
-  height:18px;
-  opacity:0.35;
 }
 .hero-sub {
   font-size:0.78rem;
