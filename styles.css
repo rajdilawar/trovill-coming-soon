@@ -117,7 +117,8 @@ nav {
   width:65%;
   height:auto;
   object-fit:cover;
-  max-height:85%;
+  object-position:center top;
+  max-height:95%;
 }
 /* Floating tag on image */
 .float-tag {
