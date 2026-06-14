@@ -820,6 +820,9 @@ h1 em {
     gap:0.5rem;
     text-align:center;
   }
+  .page-body {
+    padding:3rem 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -839,6 +842,9 @@ h1 em {
   }
   .float-tag-sub {
     font-size:0.52rem;
+  }
+  .page-body {
+    padding:2.5rem 1.2rem;
   }
 }
 

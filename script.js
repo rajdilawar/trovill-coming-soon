@@ -40,10 +40,10 @@
 
   function showError() {
     heroEmail.classList.add('error');
-    heroEmail.placeholder = 'Something went wrong. Try again.';
+    heroEmail.placeholder = 'Fehler. Bitte versuchen Sie es später erneut.';
     setTimeout(function() {
       heroEmail.classList.remove('error');
-      heroEmail.placeholder = 'your@email.com';
+      heroEmail.placeholder = 'ihre@email.de';
     }, 2000);
   }
 
@@ -69,10 +69,10 @@
     var email = heroEmail.value.trim();
     if (!email || !isValidEmail(email)) {
       heroEmail.classList.add('error');
-      heroEmail.placeholder = 'Please enter a valid email';
+      heroEmail.placeholder = 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
       setTimeout(function() {
         heroEmail.classList.remove('error');
-        heroEmail.placeholder = 'your@email.com';
+        heroEmail.placeholder = 'ihre@email.de';
       }, 1500);
       return;
     }
