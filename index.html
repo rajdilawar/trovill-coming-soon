@@ -16,7 +16,7 @@
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Trovill — Modern Mediterranean-Style Apparel from Berlin">
+    <meta property="og:title" content="Trovill — Modern Mediterranean Menswear from Berlin">
     <meta property="og:description" content="Conscious Mediterranean-style menswear crafted in Berlin. Premium materials, timeless design, thoughtfully crafted. Join waitlist for A/W 2026 launch.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://trovill.com/">
@@ -29,12 +29,12 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Trovill — Modern Mediterranean-Style Apparel from Berlin">
+    <meta name="twitter:title" content="Trovill — Modern Mediterranean Menswear from Berlin">
     <meta name="twitter:description" content="Conscious Mediterranean-style menswear. Premium materials, timeless design. Join waitlist for A/W 2026.">
     <meta name="twitter:image" content="https://trovill.com/assets/og-image.jpg">
     <meta name="twitter:image:alt" content="Trovill modern Mediterranean-style menswear from Berlin">
 
-    <title>Trovill — Modern Mediterranean-Style Apparel from Berlin</title>
+    <title>Trovill — Modern Mediterranean Menswear from Berlin</title>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -159,6 +159,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.mailerlite.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <!-- Custom Styles -->
@@ -192,18 +193,22 @@
         <div class="hero-img">
             <div class="grain"></div>
             <div class="hero-img-inner">
-                <img src="assets/heroImage1.png" alt="Man wearing Trovill Mediterranean-style menswear from Berlin" class="hero-portrait" loading="eager" width="454" height="600">
+                <img
+                    src="assets/hero-image-sw27-800.webp"
+                    srcset="assets/hero-image-sw27-400.webp 400w, assets/hero-image-sw27-800.webp 800w, assets/hero-image-sw27-1122.webp 1122w"
+                    sizes="(max-width: 1024px) 65vw, 32.5vw"
+                    alt="Man wearing Trovill Mediterranean-style menswear from Berlin"
+                    class="hero-portrait"
+                    loading="eager"
+                    fetchpriority="high"
+                    width="1122"
+                    height="1402">
             </div>
         </div>
 
         <!-- Right: Content -->
         <div class="hero-content">
-            <div class="eyebrow">
-                <div class="eyebrow-line"></div>
-                <div class="eyebrow-text">Autumn / Winter 2026 — Berlin</div>
-            </div>
-
-            <h1>Modern<br><em>Mediterranean Style</em></h1>
+            <h1>Modern<br><em>Mediterranean Menswear</em></h1>
 
             <div class="hero-rule">
                 <div class="hero-rule-line"></div>
@@ -251,9 +256,9 @@
 
     <!-- BRAND STORY -->
     <section class="story-strip" id="story" aria-label="Brand story">
-        <div class="story-quote">
+        <h2 class="story-quote">
             "European minimalism with <span>tactile natural textures</span> and emotional warmth."
-        </div>
+        </h2>
         <div class="story-body">
             <p>Trovill was founded with a simple vision — to bring together modern design, responsible production approach, and timeless wearability. We create high-quality clothing designed with attention to quality and detail.</p>
             <div class="story-values">
@@ -271,6 +276,29 @@
             <div class="manifesto-eyebrow">Our belief</div>
             <div class="manifesto-quote">"In a world of fast fashion, we choose to slow down — creating clothing that feels personal, lives beautifully, and endures over time."</div>
             <div class="manifesto-attr">— Trovill, Berlin 2026</div>
+        </div>
+    </section>
+
+    <!-- FREQUENTLY ASKED QUESTIONS -->
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="faq-inner">
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>What is Trovill?</h3>
+                <p>Trovill is a Berlin-based fashion brand creating modern Mediterranean-style menswear with conscious craftsmanship, carefully selected materials, and timeless design. We launch Autumn/Winter 2026.</p>
+            </div>
+            <div class="faq-item">
+                <h3>When does Trovill launch?</h3>
+                <p>Trovill launches Autumn / Winter 2026. Join our waitlist for exclusive early access to the first collection.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Where is Trovill based?</h3>
+                <p>Trovill is based in Berlin, Germany, and creates modern Mediterranean-style apparel for the European market and beyond.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What is Trovill's approach to fashion?</h3>
+                <p>Trovill is committed to conscious craftsmanship using carefully selected, honest materials. We focus on creating quality clothing that endures over time, opposing fast fashion culture.</p>
+            </div>
         </div>
     </section>
 

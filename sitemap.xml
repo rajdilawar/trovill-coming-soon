@@ -6,13 +6,18 @@
   <!-- Homepage -->
   <url>
     <loc>https://trovill.com/</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
+      <image:loc>https://trovill.com/assets/hero-image-sw27-1122.webp</image:loc>
+      <image:title>Trovill Modern Mediterranean Menswear</image:title>
+      <image:caption>Man wearing Trovill Mediterranean-style menswear from Berlin</image:caption>
+    </image:image>
+    <image:image>
       <image:loc>https://trovill.com/assets/SVG/svgTrovill.svg</image:loc>
-      <image:title>Trovill Logo – Modern Western-Style Apparel from Berlin</image:title>
-      <image:caption>Trovill brand logo for a Berlin-based fashion brand creating modern Western-style menswear</image:caption>
+      <image:title>Trovill Logo – Modern Mediterranean Menswear from Berlin</image:title>
+      <image:caption>Trovill brand logo for a Berlin-based fashion brand creating modern Mediterranean-style menswear</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://trovill.com/assets/trovillBrand.png</image:loc>
@@ -21,8 +26,8 @@
     </image:image>
     <image:image>
       <image:loc>https://trovill.com/assets/og-image.jpg</image:loc>
-      <image:title>Trovill – Timeless Pieces, Crafted with Soul</image:title>
-      <image:caption>Trovill modern western-style apparel for men, launching Spring 2026 from Berlin</image:caption>
+      <image:title>Trovill – Modern Mediterranean Menswear from Berlin</image:title>
+      <image:caption>Trovill modern Mediterranean-style menswear, launching Autumn / Winter 2026 from Berlin</image:caption>
     </image:image>
   </url>
 
