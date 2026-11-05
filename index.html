@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trovill — Conscious Mediterranean-style menswear from Berlin. Premium quality, carefully selected materials, timeless design. Launching A/W 2026. Join waitlist for exclusive early access.">
+    <meta name="description" content="Berlin-based Trovill creates premium Mediterranean-style menswear with conscious craftsmanship and timeless design. Launching A/W 2026.">
     <meta name="keywords" content="trovill, berlin fashion brand, modern mediterranean-style apparel, menswear, conscious craftsmanship, quality fashion, european menswear, berlin clothing brand, premium menswear, mediterranean style clothing">
     <meta name="author" content="Trovill">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="theme-color" content="#f2ebe0">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://trovill.com/">
+    <script>
+        if (location.pathname.endsWith('/index.html')) {
+            history.replaceState(null, '', location.pathname.slice(0, -10) + location.search + location.hash);
+        }
+    </script>
     
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -34,7 +39,7 @@
     <meta name="twitter:image" content="https://trovill.com/assets/og-image.jpg">
     <meta name="twitter:image:alt" content="Trovill modern Mediterranean-style menswear from Berlin">
 
-    <title>Trovill — Modern Mediterranean Menswear from Berlin</title>
+    <title>Trovill | Modern Mediterranean Menswear &amp; Conscious Fashion</title>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -106,7 +111,7 @@
       "potentialAction": {
         "@type": "JoinAction",
         "name": "Join Waitlist",
-        "target": "https://trovill.com/#waitlist"
+        "target": "https://trovill.com/#wl-section"
       }
     }
     </script>
@@ -156,11 +161,7 @@
     <link rel="icon" type="image/png" href="assets/trovillBrand.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/trovillBrand.png">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://assets.mailerlite.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
@@ -176,62 +177,91 @@
     <!-- End MailerLite Universal -->
 </head>
 <body>
-    <!-- NAVIGATION -->
-    <nav class="nav">
-        <a href="index.html">
+    <header class="site-header">
+        <a class="brand-link" href="/" aria-label="Trovill home">
             <img src="assets/SVG/svgTrovill.svg" alt="Trovill" class="nav-logo">
         </a>
-        <div class="nav-links">
-            <a href="mailto:info@trovill.com">Contact</a>
-            <button class="nav-cta" onclick="scrollToWL()">Join waitlist</button>
-        </div>
-    </nav>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="#wl-section" onclick="scrollToWL()">Wishlist</a>
+            <a href="#story">Our Story</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-    <!-- HERO SPLIT -->
-    <section class="hero" aria-label="Introduction">
-        <!-- Left: Image area -->
-        <div class="hero-img">
-            <div class="grain"></div>
-            <div class="hero-img-inner">
-                <img
-                    src="assets/hero-image-sw27-800.webp"
-                    srcset="assets/hero-image-sw27-400.webp 400w, assets/hero-image-sw27-800.webp 800w, assets/hero-image-sw27-1122.webp 1122w"
-                    sizes="(max-width: 1024px) 65vw, 32.5vw"
-                    alt="Man wearing Trovill Mediterranean-style menswear from Berlin"
-                    class="hero-portrait"
-                    loading="eager"
-                    fetchpriority="high"
-                    width="1122"
-                    height="1402">
+    <main>
+        <section class="campaign-banner campaign-banner--chapter" aria-labelledby="chapter-title">
+            <img
+                class="campaign-image"
+                src="assets/image1.png"
+                alt="Model wearing a Trovill grey hoodie"
+                width="1902"
+                height="827"
+                fetchpriority="high">
+            <div class="campaign-copy campaign-copy--chapter">
+                <h1 id="chapter-title">THE FIRST CHAPTER</h1>
+                <p>Designed in Berlin. Launching soon.</p>
+                <a class="campaign-cta" href="#wl-section" onclick="scrollToWL()">Get early access</a>
             </div>
-        </div>
+        </section>
 
-        <!-- Right: Content -->
-        <div class="hero-content">
-            <h1>Modern<br><em>Mediterranean Menswear</em></h1>
-
-            <div class="hero-rule">
-                <div class="hero-rule-line"></div>
+        <section class="campaign-banner campaign-banner--details" aria-labelledby="details-title">
+            <img
+                class="campaign-image"
+                src="assets/image2.png"
+                alt="Model wearing a deep green Trovill crewneck with signature striped cuffs"
+                width="1902"
+                height="827"
+                loading="lazy">
+            <div class="campaign-copy campaign-copy--details">
+                <h2 id="details-title">DETAILS MAKE THE DIFFERENCE</h2>
             </div>
+        </section>
 
-            <p class="hero-sub">Thoughtfully crafted menswear rooted in conscious craftsmanship and honest materials — clothing that feels personal, lives beautifully, and endures over time.</p>
-
-            <!-- Brand pillars -->
-            <div class="pillars-grid">
-                <div class="pillar">
-                    <div class="pillar-title">Conscious Craft</div>
-                </div>
-                <div class="pillar">
-                    <div class="pillar-title">Honest Materials</div>
-                </div>
-                <div class="pillar">
-                    <div class="pillar-title">Soulful Design</div>
-                </div>
+        <section class="campaign-banner campaign-banner--story" id="story" aria-labelledby="story-title">
+            <img
+                class="campaign-image"
+                src="assets/image3.png"
+                alt="Model wearing a blue Trovill shirt"
+                width="1902"
+                height="827"
+                loading="lazy">
+            <div class="campaign-copy campaign-copy--story">
+                <h2 id="story-title" class="visually-hidden">Our story</h2>
+                <blockquote>In a world of fast fashion, we choose to slow down.</blockquote>
             </div>
+        </section>
 
-            <!-- Waitlist -->
-            <div id="wl-section">
-                <div class="wl-label">Be first to shop — reserve your access</div>
+        <section class="details-gallery" aria-label="Trovill collection details">
+            <figure class="detail-tile">
+                <img src="assets/image2-1.png" alt="Man wearing a black Trovill T-shirt with an embroidered palm emblem" width="1122" height="1402" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/image2-2.png" alt="Man wearing a black Trovill T-shirt with an embroidered monogram" width="1024" height="1536" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/image2-3.png" alt="Man wearing a white Trovill T-shirt and dark trousers" width="1086" height="1448" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/image2-4.png" alt="Close-up of the embroidered Trovill monogram on dark fabric" width="1254" height="1254" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/TROVILL Label Inside White Shirt Collar.png" alt="Trovill main label inside a white shirt collar" width="1536" height="1024" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/hero-desktop.jpg" alt="Trovill shirt cuff and button detail" width="1583" height="960" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/GOTS Hang Tags on White Cotton-2.png" alt="GOTS hang-tag artwork preview on white cotton" width="1536" height="1024" loading="lazy">
+            </figure>
+            <figure class="detail-tile">
+                <img src="assets/OEKO-TEX hang tags on white cotton-1.png" alt="OEKO-TEX hang-tag artwork preview on white cotton" width="1536" height="1024" loading="lazy">
+            </figure>
+        </section>
+
+        <section class="waitlist-section" id="wl-section" aria-labelledby="waitlist-title">
+            <div class="waitlist-inner">
+                <p class="wl-label">Be first to shop — reserve your access</p>
+                <h2 id="waitlist-title">Get early access</h2>
                 <div class="wl-row">
                     <input class="wl-input" type="email" id="heroEmail" placeholder="your@email.com" autocomplete="email" required aria-label="Email address"/>
                     <button type="button" class="wl-btn" id="heroSubmit">Join waitlist</button>
@@ -251,34 +281,7 @@
                 </div>
                 <div class="wl-note">Early access · Limited first collection · No spam, ever</div>
             </div>
-        </div>
-    </section>
-
-    <!-- BRAND STORY -->
-    <section class="story-strip" id="story" aria-label="Brand story">
-        <h2 class="story-quote">
-            "European minimalism with <span>tactile natural textures</span> and emotional warmth."
-        </h2>
-        <div class="story-body">
-            <p>Trovill was founded with a simple vision — to bring together modern design, responsible production approach, and timeless wearability. We create high-quality clothing designed with attention to quality and detail.</p>
-            <div class="story-values">
-                <div class="value-row"><div class="value-dot"></div><div class="value-text"><strong>Conscious Craftsmanship</strong> — each piece crafted with intention, not merely designed</div></div>
-                <div class="value-row"><div class="value-dot"></div><div class="value-text"><strong>Honest Materials</strong> — respecting nature and the skilled hands that bring them to life</div></div>
-                <div class="value-row"><div class="value-dot"></div><div class="value-text"><strong>Soulfulness</strong> — clothing with warmth, emotion, and enduring purpose</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MANIFESTO QUOTE -->
-    <section class="manifesto" id="commitment" aria-label="Manifesto">
-        <img src="assets/SVG/svgTrovill.svg" alt="" class="manifesto-bg-logo" aria-hidden="true">
-        <div class="manifesto-content">
-            <div class="manifesto-eyebrow">Our belief</div>
-            <div class="manifesto-quote">"In a world of fast fashion, we choose to slow down — creating clothing that feels personal, lives beautifully, and endures over time."</div>
-            <div class="manifesto-attr">— Trovill, Berlin 2026</div>
-        </div>
-    </section>
-
+        </section>
     <!-- FREQUENTLY ASKED QUESTIONS -->
     <section class="faq" id="faq" aria-labelledby="faq-title">
         <div class="faq-inner">
@@ -301,6 +304,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- FOOTER -->
     <footer class="site-footer" role="contentinfo" id="contact">
