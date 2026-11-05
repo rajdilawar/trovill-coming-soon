@@ -23,6 +23,10 @@
   var wlRow = document.querySelector('.wl-row');
   var wlConsent = document.getElementById('wl-consent-check');
   var wlConsentSection = document.querySelector('.wl-consent');
+  
+  // Rate limiting variables
+  var lastSubmitTime = 0;
+  var MIN_SUBMIT_INTERVAL = 3000; // 3 seconds between submissions
 
   function showSuccess() {
     wlRow.style.display = 'none';
@@ -54,6 +58,11 @@
 
   // Listen for MailerLite form messages (including already subscribed)
   window.addEventListener('message', function(event) {
+    // Validate origin to prevent XSS attacks
+    if (event.origin !== 'https://assets.mailerlite.com') {
+      return;
+    }
+    
     if (event.data && event.data.type === 'mailerlite') {
       if (event.data.action === 'success') {
         showSuccess();
@@ -65,6 +74,19 @@
 
   function handleWL(e) {
     if (e) e.preventDefault();
+    
+    // Rate limiting check
+    var now = Date.now();
+    if (now - lastSubmitTime < MIN_SUBMIT_INTERVAL) {
+      heroEmail.classList.add('error');
+      heroEmail.placeholder = 'Bitte warten Sie einen Moment';
+      setTimeout(function() {
+        heroEmail.classList.remove('error');
+        heroEmail.placeholder = 'ihre@email.de';
+      }, 1500);
+      return;
+    }
+    lastSubmitTime = now;
     
     var email = heroEmail.value.trim();
     if (!email || !isValidEmail(email)) {
