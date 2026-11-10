@@ -28,7 +28,6 @@ include:
 
 # Plugin configuration
 plugins:
-  - jekyll-sitemap
   - jekyll-seo-tag
 
 # SEO settings

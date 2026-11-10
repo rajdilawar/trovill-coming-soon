@@ -27,8 +27,32 @@
     <image:image>
       <image:loc>https://trovill.com/assets/og-image.jpg</image:loc>
       <image:title>Trovill – Modern Mediterranean Menswear from Berlin</image:title>
-      <image:caption>Trovill modern Mediterranean-style menswear, launching Autumn / Winter 2026 from Berlin</image:caption>
+      <image:caption>Trovill modern Mediterranean-style menswear from Berlin</image:caption>
     </image:image>
+  </url>
+
+  <!-- Our Story -->
+  <url>
+    <loc>https://trovill.com/our-story.html</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Journal index -->
+  <url>
+    <loc>https://trovill.com/blog/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Journal article -->
+  <url>
+    <loc>https://trovill.com/blog/why-making-a-small-first-collection-is-difficult/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Privacy Policy -->
