@@ -176,14 +176,14 @@
     </script>
     <!-- End MailerLite Universal -->
 </head>
-<body>
+<body id="top">
     <header class="site-header">
         <a class="brand-link" href="/" aria-label="Trovill home">
             <img src="assets/SVG/svgTrovill.svg" alt="Trovill" class="nav-logo">
         </a>
         <nav class="nav-links" aria-label="Main navigation">
-            <a href="#wl-section" onclick="scrollToWL()">Wishlist</a>
-            <a href="our-story.html">Our Story</a>
+            <a href="/#wl-section">Wishlist</a>
+            <a href="/our-story">Our Story</a>
             <a href="/blog/">Journal</a>
             <a href="mailto:info@trovill.com">Contact</a>
         </nav>
@@ -270,7 +270,7 @@
                 <div class="wl-consent">
                     <label class="wl-consent-label">
                         <input type="checkbox" id="wl-consent-check" class="wl-consent-check" required>
-                        <span class="wl-consent-text">I agree that Trovill UG (haftungsbeschränkt) may use my email address to inform me about the launch, product updates, and relevant brand news. I can withdraw my consent at any time. <a href="privacy-policy.html" target="_blank">Privacy Policy</a></span>
+                        <span class="wl-consent-text">I agree that Trovill UG (haftungsbeschränkt) may use my email address to inform me about the launch, product updates, and relevant brand news. I can withdraw my consent at any time. <a href="/privacy-policy" target="_blank">Privacy Policy</a></span>
                     </label>
                 </div>
                 <div class="wl-success" id="wl-success">
@@ -311,14 +311,16 @@
     <footer class="site-footer" role="contentinfo" id="contact">
         <div class="footer-grid">
             <div>
-                <img src="assets/SVG/svgTrovill.svg" alt="Trovill" class="footer-logo">
+                <a href="#top" aria-label="Back to top">
+                    <img src="assets/SVG/svgTrovill.svg" alt="Trovill" class="footer-logo">
+                </a>
                 <div class="footer-tag">Modern Mediterranean-Style Apparel<br>from Berlin<br><br>www.trovill.com<br>info@trovill.com</div>
             </div>
             <div>
                 <div class="footer-col-title">Legal</div>
                 <div class="footer-links">
-                    <a href="impressum.html">Imprint</a>
-                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="/impressum">Imprint</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
                     <a href="/blog/">Journal</a>
                     <a href="mailto:info@trovill.com">Contact</a>
                 </div>

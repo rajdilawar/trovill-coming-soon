@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Disallow internal/utility pages
-Disallow: /thank-you.html
+Disallow: /thank-you
 Disallow: /assets/README.md
 Disallow: /README.md
 Disallow: /ACTION_ITEMS.md
